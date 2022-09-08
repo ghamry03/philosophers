@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 03:35:18 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/08 15:14:00 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/08 15:23:14 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	eat(t_un *un)
 {
 	pthread_mutex_lock(un->left_mutex);
 	pthread_mutex_lock(un->right_mutex);
+	un->status = 2;
+	print_state(un->i, un->status, un->print, *un->start);
 	mysleep(un->eat);
 	*un->left_fork = 0;
 	*un->right_fork = 0;
-	un->status = 2;
-	print_state(un->i, un->status, un->print, *un->start);
 	pthread_mutex_unlock(un->left_mutex);
 	pthread_mutex_unlock(un->right_mutex);
 	return (1);
@@ -73,8 +73,8 @@ int	eat(t_un *un)
 int	sleepah(t_un *un)
 {
 	un->status = 3;
-	mysleep(un->sleep);
 	print_state(un->i, un->status, un->print, *un->start);
+	mysleep(un->sleep);
 	return (1);
 }
 
