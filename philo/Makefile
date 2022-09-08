@@ -6,7 +6,7 @@
 #    By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/26 18:22:31 by ommohame          #+#    #+#              #
-#    Updated: 2022/09/06 15:40:15 by ommohame         ###   ########.fr        #
+#    Updated: 2022/09/06 22:31:32 by ommohame         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRCS		=		main.c \
 					fill_struct.c \
 					threads.c \
 					life.c \
+					time.c \
 
 UTILS		=		ft_strlen.c \
 					ft_putstr_fd.c \

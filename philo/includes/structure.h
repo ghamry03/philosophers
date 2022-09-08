@@ -6,21 +6,17 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 02:02:28 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/06 16:21:45 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/08 15:08:47 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURE_H
 # define STRUCTURE_H
 
-# ifndef FORKS
-# define FORKS 2
-# endif
 /*
 **	i:			index of philo
 **	status:		state of the philo
-	 				-1: dead
-					0: still didn't do anything yet
+	 				0: dead
 					1: picked forks
 					2: ate food
 					3: slept
@@ -35,12 +31,16 @@ typedef struct s_un
 {
 	int				i;
 	int				status;
-	int				fork[FORKS];
+	int				*left_fork;
+	int				*right_fork;
 	int				death;
 	int				eat;
 	int				sleep;
 	int				repeat;
-	pthread_mutex_t	mutex[FORKS];
+	time_t			delay;
+	time_t			*start;
+	pthread_mutex_t	*left_mutex;
+	pthread_mutex_t	*right_mutex;
 	pthread_mutex_t	*print;
 }	t_un;
 
@@ -67,6 +67,7 @@ typedef struct s_philo
 	int				sleep;
 	int				repeat;
 	int				*fork;
+	time_t			start;
 	pthread_t		*threads;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	print;

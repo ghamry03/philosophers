@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 00:56:15 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/03 22:25:31 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:49:37 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	get_threads(t_philo **philo)
 		}
 		i++;
 	}
+	(*philo)->start = get_time();
 	return (1);
 }
 

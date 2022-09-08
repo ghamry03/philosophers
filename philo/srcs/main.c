@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 18:26:20 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/06 15:41:52 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/08 14:49:24 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,28 @@ void	*cycle_of_life(void *p)
 	int		i;
 	t_un	*un;
 
-	i = 0;
 	un = (t_un *)p;
-	while (i < un->repeat)
+	i = 0;
+	while (*un->start == -1)
+		;
+	while (1)
 	{
-		if (un->status == 0 || un->status == 4)
-			forkah(&un);
-		else if (un->status == 1)
-			eat(&un);
-		else if (un->status == 2)
-			sleepah(&un);
-		else if (un->status == 3)
-			think(&un);
-		else if (un->status == -1)
-			exit (0);
-		i++;
+		if (un->status == 4)
+			forkah(un);
+		if (un->status == 1)
+		{
+			eat(un);
+			i++;
+		}
+		if (un->status == 2)
+			sleepah(un);
+		if (un->status == 3)
+			think(un);
+		if (un->status == 0)
+			break ;
+		if (un->repeat != -1)
+			if (i == un->repeat)
+				break ;
 	}
 	return (NULL);
 }
@@ -45,6 +52,8 @@ int	get_the_philo(t_philo **philo)
 	if (!get_threads(philo))
 		return (0);
 	if (!join_threads(philo))
+		return (0);
+	if (!destroy_mutex(philo))
 		return (0);
 	return (1);
 }
@@ -74,7 +83,6 @@ int	philo(char **av)
 		return (0);
 	print_struct(*philo);
 	get_the_philo(&philo);
-	destroy_mutex(&philo);
 	return (1);
 }
 
