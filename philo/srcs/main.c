@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 18:26:20 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/08 14:49:24 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/24 15:32:10 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,29 @@
 void	*cycle_of_life(void *p)
 {
 	int		i;
-	t_un	*un;
+	t_philo	*philo;
 
-	un = (t_un *)p;
+	philo = (t_philo *)p;
 	i = 0;
-	while (*un->start == -1)
-		;
-	while (1)
+	while (!*philo->check_death)
 	{
-		if (un->status == 4)
-			forkah(un);
-		if (un->status == 1)
+		if (philo->state == 4)
+			if (!forkah(philo))
+				break ;
+		if (philo->state == 1)
 		{
-			eat(un);
+			if (!eat(philo))
+				break ;
 			i++;
 		}
-		if (un->status == 2)
-			sleepah(un);
-		if (un->status == 3)
-			think(un);
-		if (un->status == 0)
-			break ;
-		if (un->repeat != -1)
-			if (i == un->repeat)
+		if (philo->state == 2)
+			if (!sleepah(philo))
+				break ;
+		if (philo->state == 3)
+			if (!think(philo))
+				break ;
+		if (philo->repeat != -1)
+			if (i == philo->repeat)
 				break ;
 	}
 	return (NULL);
@@ -47,7 +47,7 @@ void	*cycle_of_life(void *p)
  * where the party starts
  * gather the philos into the house
  */
-int	get_the_philo(t_philo **philo)
+int	get_the_philo(t_table **philo)
 {
 	if (!get_threads(philo))
 		return (0);
@@ -58,7 +58,7 @@ int	get_the_philo(t_philo **philo)
 	return (1);
 }
 
-int	init_philo(char **av, t_philo **philo)
+int	init_table(char **av, t_table **philo)
 {
 	if (!parser(av))
 		return (0);
@@ -66,34 +66,35 @@ int	init_philo(char **av, t_philo **philo)
 		return (0);
 	if (!init_mutex(philo))
 		return (0);
-	if (!un_struct(philo))
+	if (!philo_struct(philo))
 		return (0);
 	return (1);
 }
 
 int	philo(char **av)
 {
-	t_philo	*philo;
+	t_table	*philo;
 
 	philo = NULL;
-	philo = (t_philo *)malloc(sizeof(t_philo));
+	philo = (t_table *)malloc(sizeof(t_table));
 	if (!philo)
 		return (0);
-	if (!init_philo(av, &philo))
+	if (!init_table(av, &philo))
 		return (0);
-	print_struct(*philo);
+	// print_struct(*philo);
 	get_the_philo(&philo);
 	return (1);
 }
 
 int	main(int ac, char **av)
 {
-	if (ac == 1 || ac > 6 || (ac > 1 && ac < 5 && !ft_strtcmp(av[1], "--help")))
+	if (ac == 1 || ac > 6
+		|| (ac > 1 && ac < 5 && !ft_strfcmp(av[1], "--help")))
 	{
 		ft_putstr_fd("Error: run ./philo --help\n", 2);
 		exit(EXIT_FAILURE);
 	}
-	else if (ac == 2 && ft_strtcmp(av[1], "--help"))
+	else if (ac == 2 && ft_strfcmp(av[1], "--help"))
 		return (help());
 	else if (!philo(av))
 		return (EXIT_FAILURE);

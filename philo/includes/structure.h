@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 02:02:28 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/08 15:08:47 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/24 15:18:12 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,25 @@
 **	repeat:		how many time to repeat the cycle
 **	mutex:		philo own mutex lock
 */
-typedef struct s_un
+typedef struct	s_philo 
 {
 	int				i;
-	int				status;
+	int				state;
+	int				*check_death;
+	int				left_forkn;
+	int				right_forkn;
 	int				*left_fork;
 	int				*right_fork;
 	int				death;
 	int				eat;
 	int				sleep;
 	int				repeat;
-	time_t			delay;
+	time_t			last_eat;
 	time_t			*start;
 	pthread_mutex_t	*left_mutex;
 	pthread_mutex_t	*right_mutex;
 	pthread_mutex_t	*print;
-}	t_un;
+}	t_philo;
 
 /*
 **	num:		number of philos
@@ -58,11 +61,12 @@ typedef struct s_un
 **	mutex:		an array with all the mutex locks
 **	philo:		a structure for each philospher
 */
-typedef struct s_philo
+typedef struct s_table
 {
 	int				*i;
 	int				num;
 	int				death;
+	int				check_death;
 	int				eat;
 	int				sleep;
 	int				repeat;
@@ -71,7 +75,7 @@ typedef struct s_philo
 	pthread_t		*threads;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	print;
-	t_un			*un;
-}	t_philo;
+	t_philo			*philo;
+}	t_table;
 
 #endif

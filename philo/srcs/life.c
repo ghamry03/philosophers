@@ -6,81 +6,94 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 03:35:18 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/08 15:23:14 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/24 15:37:03 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	print_state(int n, int state, pthread_mutex_t *lock, time_t start)
+static int	check_fork(t_philo *philo, pthread_mutex_t *lock, int f)
 {
-	time_t	current;
+	int		*fork;
+	int		forkn;
+	int		ret;
 
 	pthread_mutex_lock(lock);
-	current = time_stamp(start);
-	ft_putnbr_fd(current, 1);
-	ft_putstr_fd(": philo ", 1);
-	ft_putnbr_fd(n, 1);
-	if (state == 1 || state == 0)
-		ft_putstr_fd(" has picked a fork\n", 1);
-	else if (state == 2)
-		ft_putstr_fd(" is eating\n", 1);
-	else if (state == 3)
-		ft_putstr_fd(" is sleeping\n", 1);
-	else if (state == 4)
-		ft_putstr_fd(" is thinking\n", 1);
-	pthread_mutex_unlock(lock);
-}
-
-int	forkah(t_un *un)
-{
-	while (1)
+	if (!f)
 	{
-		pthread_mutex_lock(un->left_mutex);
-		pthread_mutex_lock(un->right_mutex);
-		if (!*un->left_fork && !*un->right_fork
-			&& *un->left_fork != un->i
-			&& *un->right_fork != un->i)
-		{
-			un->status = 1;
-			print_state(un->i, un->status, un->print, *un->start);
-			*un->left_fork = un->i;
-			*un->right_fork = un->i;
-			pthread_mutex_unlock(un->left_mutex);
-			pthread_mutex_unlock(un->right_mutex);
-			return (1);
-		}
-		pthread_mutex_unlock(un->left_mutex);
-		pthread_mutex_unlock(un->right_mutex);
+		fork = philo->left_fork;
+		forkn = philo->left_forkn;
 	}
-	return (0);
+	else
+	{
+		fork = philo->right_fork;
+		forkn = philo->right_forkn;
+	}
+	if (!*fork || (*fork == -1 && philo->i % 2 != 0))
+	{
+		*fork = philo->i;
+		print_state(philo, forkn);
+		ret = 1;
+	}
+	else
+		ret = 0;
+	pthread_mutex_unlock(lock);
+	return (ret);
 }
 
-int	eat(t_un *un)
+int	forkah(t_philo *philo)
 {
-	pthread_mutex_lock(un->left_mutex);
-	pthread_mutex_lock(un->right_mutex);
-	un->status = 2;
-	print_state(un->i, un->status, un->print, *un->start);
-	mysleep(un->eat);
-	*un->left_fork = 0;
-	*un->right_fork = 0;
-	pthread_mutex_unlock(un->left_mutex);
-	pthread_mutex_unlock(un->right_mutex);
+	int		fork_check;
+
+	fork_check = 0;
+	philo->state = 1;
+	philo->last_eat = get_time();
+	while (fork_check < 2)
+	{
+		if (*philo->check_death || check_death(philo))
+			return (0);
+		if (check_fork(philo, philo->left_mutex, 0))
+			fork_check++;
+		if (*philo->check_death || check_death(philo))
+			return (0);
+		if (check_fork(philo, philo->right_mutex, 1))
+			fork_check++;
+	}
 	return (1);
 }
 
-int	sleepah(t_un *un)
-{
-	un->status = 3;
-	print_state(un->i, un->status, un->print, *un->start);
-	mysleep(un->sleep);
+int	eat(t_philo *philo)
+{	
+	philo->state = 2;
+	mysleep(philo->eat);
+	pthread_mutex_lock(philo->left_mutex);
+	*philo->left_fork = 0;
+	pthread_mutex_unlock(philo->left_mutex);
+	pthread_mutex_lock(philo->right_mutex);
+	*philo->right_fork = 0;
+	pthread_mutex_unlock(philo->right_mutex);
+	if (*philo->check_death || check_death(philo))
+		return (0);
+	print_state(philo, -1);
+	philo->last_eat = get_time();
 	return (1);
 }
 
-int	think(t_un *un)
+int	sleepah(t_philo *philo)
 {
-	un->status = 4;
-	print_state(un->i, un->status, un->print, *un->start);
+	philo->state = 3;
+	if (*philo->check_death || check_death(philo))
+		return (0);
+	print_state(philo, -1);
+	mysleep(philo->sleep);
+	return (1);
+}
+
+int	think(t_philo *philo)
+{
+	philo->state = 4;
+	if (*philo->check_death || check_death(philo))
+		return (0);
+	print_state(philo, -1);
 	return (1);
 }

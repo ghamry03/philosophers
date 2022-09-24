@@ -6,37 +6,35 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 00:56:15 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/08 14:49:37 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/24 15:18:29 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	get_threads(t_philo **philo)
+int	get_threads(t_table **table)
 {
 	int		i;
 	int		num;
 
-	num = (*philo)->num;
-	(*philo)->threads = (pthread_t *)malloc(sizeof(pthread_t) * num);
-	if (!(*philo)->threads)
-		return (-1);
+	num = (*table)->num;
+	(*table)->threads = (pthread_t *)malloc(sizeof(pthread_t) * num);
 	i = 0;
+	(*table)->start = get_time();
 	while (i < num)
 	{
-		if (pthread_create(&(*philo)->threads[i],
-				NULL, &cycle_of_life, &(*philo)->un[i]))
+		if (pthread_create(&(*table)->threads[i],
+				NULL, &cycle_of_life, &(*table)->philo[i]))
 		{
 			ft_putstr_fd("philo: error: creating thread failed\n", i);
 			return (0);
 		}
 		i++;
 	}
-	(*philo)->start = get_time();
 	return (1);
 }
 
-int	join_threads(t_philo **philo)
+int	join_threads(t_table **philo)
 {
 	int		i;
 	int		num;
@@ -54,7 +52,7 @@ int	join_threads(t_philo **philo)
 	return (1);
 }
 
-int	init_mutex(t_philo **philo)
+int	init_mutex(t_table **philo)
 {
 	int		i;
 	int		num;
@@ -82,7 +80,7 @@ int	init_mutex(t_philo **philo)
 	return (1);
 }
 
-int	destroy_mutex(t_philo **philo)
+int	destroy_mutex(t_table **philo)
 {
 	int		i;
 	int		num;

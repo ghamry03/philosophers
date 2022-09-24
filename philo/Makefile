@@ -6,7 +6,7 @@
 #    By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/26 18:22:31 by ommohame          #+#    #+#              #
-#    Updated: 2022/09/06 22:31:32 by ommohame         ###   ########.fr        #
+#    Updated: 2022/09/24 15:24:26 by ommohame         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,12 @@ SRCS		=		main.c \
 					threads.c \
 					life.c \
 					time.c \
+					check_death.c \
+					print_state.c \
 
 UTILS		=		ft_strlen.c \
-					ft_putstr_fd.c \
+					ft_strdup.c \
+					ft_put_fd.c \
 					ft_strfcmp.c \
 					ft_isdigit.c \
 					ft_atox.c	\
@@ -47,18 +50,16 @@ RM			=		rm -rf
 $(NAME)		:		$(UTILS_OBJS) $(OBJS)
 					$(CC) $(CFLAGS) $(UTILS_OBJS) $(OBJS) -I$(INCLUDES) -o $(NAME)
 					clear
-					@echo "compilation Successful! 🥳"
+					@echo "Compilation  Successful!"
 
 all			:		$(NAME)
 
 clean		:
 					@$(RM) $(OBJS) 
 					@$(RM) $(UTILS_OBJS)
-					@echo "clean Successful! 🥳"
 
 fclean		:		clean
 					@$(RM) $(NAME)
-					@echo "fclean Successful! 🥳"
 
 re			:		fclean all
 

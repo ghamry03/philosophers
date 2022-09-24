@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 22:15:38 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/08 15:15:34 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:54:46 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ time_t	get_time(void)
 		ft_putstr_fd("philo: getting the time failed\n", 2);
 		return (-1);
 	}
-	ret = (current.tv_sec * 1000000) + current.tv_usec;
+	ret = (current.tv_sec * 1000) + (current.tv_usec / 1000);
 	return (ret);
 }
 
@@ -34,10 +34,8 @@ time_t	time_stamp(time_t start)
 void	mysleep(time_t duration)
 {
 	time_t	time;
-	time_t	current;
 
 	time = get_time();
-	current = time;
-	while (current <= time + duration)
-		current = get_time();
+	while (get_time () < time + duration)
+		usleep(10);
 }

@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strfcmp.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/26 20:14:49 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/21 14:27:42 by ommohame         ###   ########.fr       */
+/*   Created: 2022/09/21 14:24:35 by ommohame          #+#    #+#             */
+/*   Updated: 2022/09/21 14:24:58 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_strfcmp(char *s1, char *s2)
+char	*ft_strdup(char *s1)
 {
-	int		i;
+	size_t	i;
+	char	*s2;
 
-	if (ft_strlen(s1) != ft_strlen(s2))
-		return (0);
 	i = 0;
-	while (s1[i] && s2[i])
+	s2 = (char *)malloc(sizeof(char) * (ft_strlen(s1) + 1));
+	if (!s2)
+		return (0);
+	while (s1[i])
 	{
-		if (s1[i] != s2[i])
-			return (0);
+		s2[i] = s1[i];
 		i++;
 	}
-	return (1);
+	s2[i] = 0;
+	return (s2);
 }

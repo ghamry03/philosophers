@@ -6,68 +6,79 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 02:26:21 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/08 15:08:38 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/24 15:33:02 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	fill_struct(char **av, t_philo **philo)
+int	fill_struct(char **av, t_table **table)
 {
-	(*philo)->num = ft_atox(av[1]);
-	(*philo)->death = ft_atox(av[2]);
-	(*philo)->eat = ft_atox(av[3]);
-	(*philo)->sleep = ft_atox(av[4]);
+	int		i;
+
+	i = -1;
+	(*table)->num = ft_atox(av[1]);
+	(*table)->death = ft_atox(av[2]);
+	(*table)->check_death = 0; 
+	(*table)->eat = ft_atox(av[3]);
+	(*table)->sleep = ft_atox(av[4]);
 	if (av[5])
-		(*philo)->repeat = ft_atox(av[5]);
+		(*table)->repeat = ft_atox(av[5]);
 	else
-		(*philo)->repeat = 0;
-	(*philo)->fork = (int *)malloc(sizeof(int) * ft_atox(av[1]));
-	if (!(*philo)->fork)
+		(*table)->repeat = 0;
+	(*table)->fork = (int *)malloc(sizeof(int) * (*table)->num);
+	if (!(*table)->fork)
 		return (0);
+	while (++i < (*table)->num)
+		(*table)->fork[i] = -1;
 	return (1);
 }
 
-static int	fill_un(t_philo **philo, int i)
+static int	fill_philo(t_table **table, int i)
 {
-	(*philo)->un[i].i = i + 1;
-	(*philo)->un[i].status = 4;
-	(*philo)->un[i].left_fork = &(*philo)->fork[i];
-	(*philo)->un[i].start = &(*philo)->start;
-	if (i == (*philo)->num - 1)
-		(*philo)->un[i].right_fork = &(*philo)->fork[0];
+	(*table)->philo[i].i = i + 1;
+	(*table)->philo[i].state = 4;
+	(*table)->philo[i].start = &(*table)->start;
+	(*table)->philo[i].death = (*table)->death;
+	(*table)->philo[i].check_death = &(*table)->check_death;
+	(*table)->philo[i].eat = (*table)->eat;
+	(*table)->philo[i].sleep = (*table)->sleep;
+	(*table)->philo[i].repeat = (*table)->repeat;
+	(*table)->philo[i].left_mutex = &(*table)->mutex[i];
+	(*table)->philo[i].print = &(*table)->print;
+	(*table)->philo[i].left_fork = &(*table)->fork[i];
+	(*table)->philo[i].left_forkn = i + 1;
+	if (i == (*table)->num - 1)
+	{
+		(*table)->philo[i].right_fork = &(*table)->fork[0];
+		(*table)->philo[i].right_mutex = &(*table)->mutex[0];
+		(*table)->philo[i].right_forkn = 1;
+	}
 	else
-		(*philo)->un[i].right_fork = &(*philo)->fork[i + 1];
-	(*philo)->un[i].death = (*philo)->death;
-	(*philo)->un[i].eat = (*philo)->eat;
-	(*philo)->un[i].sleep = (*philo)->sleep;
-	(*philo)->un[i].repeat = (*philo)->repeat;
-	(*philo)->un[i].left_mutex = &(*philo)->mutex[i];
-	if (i == (*philo)->num - 1)
-		(*philo)->un[i].right_mutex = &(*philo)->mutex[0];
-	else
-		(*philo)->un[i].right_mutex = &(*philo)->mutex[i + 1];
-	(*philo)->un[i].print = &(*philo)->print;
-	(*philo)->un[i].delay = 0;
+	{
+		(*table)->philo[i].right_fork = &(*table)->fork[i + 1];
+		(*table)->philo[i].right_mutex = &(*table)->mutex[i + 1];
+		(*table)->philo[i].right_forkn = i + 2;
+	}
 	return (1);
 }
 
-int	un_struct(t_philo **philo)
+int	philo_struct(t_table **table)
 {
 	int		i;
 	int		num;
 
 	i = 0;
-	num = (*philo)->num;
-	(*philo)->start = -1;
-	if (!(*philo)->start)
+	num = (*table)->num;
+	(*table)->start = -1;
+	if (!(*table)->start)
 		return (0);
-	(*philo)->un = (t_un *)malloc(sizeof(t_un) * num);
-	if (!(*philo)->un)
+	(*table)->philo = (t_philo *)malloc(sizeof(t_philo) * num);
+	if (!(*table)->philo)
 		return (0);
 	while (i < num)
 	{
-		if (!fill_un(philo, i))
+		if (!fill_philo(table, i))
 			return (0);
 		i++;
 	}
