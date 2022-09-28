@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 18:40:30 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/24 15:23:12 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/29 00:31:03 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include "structure.h"
+
+# define SUCCESS	0
+# define ERROR		-1
 
 /***************** COLORS *****************/
 # define RESET			"\033[0m"
