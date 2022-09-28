@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 03:35:18 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/24 15:37:03 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/27 20:22:35 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ int	forkah(t_philo *philo)
 
 	fork_check = 0;
 	philo->state = 1;
-	philo->last_eat = get_time();
 	while (fork_check < 2)
 	{
+		if (fork_check == 0)
+			philo->last_eat = get_time();
 		if (*philo->check_death || check_death(philo))
 			return (0);
 		if (check_fork(philo, philo->left_mutex, 0))
@@ -65,6 +66,7 @@ int	forkah(t_philo *philo)
 int	eat(t_philo *philo)
 {	
 	philo->state = 2;
+	print_state(philo, -1);
 	mysleep(philo->eat);
 	pthread_mutex_lock(philo->left_mutex);
 	*philo->left_fork = 0;
@@ -74,7 +76,6 @@ int	eat(t_philo *philo)
 	pthread_mutex_unlock(philo->right_mutex);
 	if (*philo->check_death || check_death(philo))
 		return (0);
-	print_state(philo, -1);
 	philo->last_eat = get_time();
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 02:26:21 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/24 15:33:02 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/25 20:54:31 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static int	fill_philo(t_table **table, int i)
 	(*table)->philo[i].sleep = (*table)->sleep;
 	(*table)->philo[i].repeat = (*table)->repeat;
 	(*table)->philo[i].left_mutex = &(*table)->mutex[i];
+	(*table)->philo[i].death_l = &(*table)->death_l;
 	(*table)->philo[i].print = &(*table)->print;
 	(*table)->philo[i].left_fork = &(*table)->fork[i];
 	(*table)->philo[i].left_forkn = i + 1;

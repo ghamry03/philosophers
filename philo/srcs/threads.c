@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/30 00:56:15 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/24 15:18:29 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/25 20:54:41 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,16 @@ int	get_threads(t_table **table)
 	return (1);
 }
 
-int	join_threads(t_table **philo)
+int	join_threads(t_table **table)
 {
 	int		i;
 	int		num;
 
-	num = (*philo)->num;
+	num = (*table)->num;
 	i = 0;
 	while (i < num)
 	{
-		if (pthread_join((*philo)->threads[i++], NULL))
+		if (pthread_join((*table)->threads[i++], NULL))
 		{
 			ft_putstr_fd("philo: error: failed to join thread\n", 2);
 			return (0);
@@ -52,27 +52,28 @@ int	join_threads(t_table **philo)
 	return (1);
 }
 
-int	init_mutex(t_table **philo)
+int	init_mutex(t_table **table)
 {
 	int		i;
 	int		num;
 
-	num = (*philo)->num;
-	(*philo)->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * num);
-	if (!(*philo)->mutex)
+	num = (*table)->num;
+	(*table)->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * num);
+	if (!(*table)->mutex)
 		return (0);
 	i = 0;
 	while (i < num)
 	{
-		(*philo)->i = (int *)malloc(sizeof(int));
-		*(*philo)->i = i;
-		if (pthread_mutex_init(&(*philo)->mutex[i++], NULL))
+		(*table)->i = (int *)malloc(sizeof(int));
+		*(*table)->i = i;
+		if (pthread_mutex_init(&(*table)->mutex[i++], NULL))
 		{
 			ft_putstr_fd("philo: error: creating a new mutex failed\n", 2);
 			return (0);
 		}
 	}
-	if (pthread_mutex_init(&(*philo)->print, NULL))
+	if (pthread_mutex_init(&(*table)->print, NULL)
+		|| pthread_mutex_init(&(*table)->death_l, NULL))
 	{
 		ft_putstr_fd("philo: error: creating a new mutex failed\n", 2);
 		return (0);
@@ -80,22 +81,23 @@ int	init_mutex(t_table **philo)
 	return (1);
 }
 
-int	destroy_mutex(t_table **philo)
+int	destroy_mutex(t_table **table)
 {
 	int		i;
 	int		num;
 
 	i = 0;
-	num = (*philo)->num;
+	num = (*table)->num;
 	while (i < num)
 	{
-		if (pthread_mutex_destroy(&(*philo)->mutex[i++]))
+		if (pthread_mutex_destroy(&(*table)->mutex[i++]))
 		{
 			ft_putstr_fd("philo: error: creating a new mutex failed\n", 2);
 			return (0);
 		}
 	}
-	if (pthread_mutex_destroy(&(*philo)->print))
+	if (pthread_mutex_destroy(&(*table)->print)
+		|| pthread_mutex_destroy(&(*table)->death_l))
 	{
 		ft_putstr_fd("philo: error: creating a new mutex failed\n", 2);
 		return (0);

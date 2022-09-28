@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/27 02:02:28 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/24 15:18:12 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/09/24 15:41:58 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct	s_philo
 	pthread_mutex_t	*left_mutex;
 	pthread_mutex_t	*right_mutex;
 	pthread_mutex_t	*print;
+	pthread_mutex_t	*death_l;
 }	t_philo;
 
 /*
@@ -75,6 +76,7 @@ typedef struct s_table
 	pthread_t		*threads;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	print;
+	pthread_mutex_t	death_l;
 	t_philo			*philo;
 }	t_table;
 
