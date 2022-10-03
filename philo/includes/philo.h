@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/26 18:40:30 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/24 15:23:12 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/01 18:15:42 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/04 01:30:50 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,35 @@
 # include <sys/time.h>
 # include "structure.h"
 
-/***************** COLORS *****************/
+/********************* DEFINES *********************/
+# define SUCCESS 0
+# define ERROR	-1
+
+//	PHILOSOPHER STATE
+# define DEAD	-1
+# define THINK	0
+# define P_FORK	1 // picking fork
+# define EAT	2
+# define SLEEP	3
+
+//	ERROR TYPE
+# define SYS_ERR 0
+# define PAR_ERR 1
+# define LOG_MSG 2
+
+//	SYSTEM ERROR
+# define MALLOC_ERR	0
+# define MUTEX_ERR	1
+# define THREAD_ERR 2
+# define JOIN_ERR	3
+# define DMUTEX_ERR	4
+
+//	PARSER ERROR
+# define INV_ARG	0
+# define NDGT_ERR	1
+# define NMAX_ERR	2
+
+/*********************  COLORS  *********************/
 # define RESET			"\033[0m"
 # define BLACK			"\033[30m"	/* Black */
 # define RED			"\033[31m"		 /* Red */
@@ -40,39 +68,31 @@
 # define BOLDCYAN		"\033[1m\033[36m"		 /* Bold Cyan */
 # define BOLDWHITE		"\033[1m\033[37m"		 /* Bold White */
 
-/***************** PHILO *****************/
-int		parser(char **av);
-void	*cycle_of_life(void *p);
-int		fill_struct(char **av, t_table **philo);
-int		prepare_philo(t_table **philo);
-int		forkah(t_philo *un);
-int		sleepah(t_philo *un);
-int		eat(t_philo *un);
-int		think(t_philo *un);
-int		philo_struct(t_table **philo);
-void	print_state(t_philo *philo, int fork_n);
-int		check_death(t_philo *philo);
+/*********************  PHILO *********************/
+int		parser(int ac, char **av);
 
-/***************** THREADS *****************/
-int		get_threads(t_table **philo);
-int		join_threads(t_table **philo);
-int		init_mutex(t_table **philo);
-int		destroy_mutex(t_table **philo);
+t_table	*init_struct(char **av);
 
-/***************** TIME *****************/
-time_t	time_stamp(time_t start);
-time_t	get_time(void);
-void	mysleep(time_t duration);
+void	print_msg(int type, int num);
+int		print_state(t_philo *philo, int fork_n);
 
-/***************** UTILS *****************/
-int		help(void);
-int		ft_strlen(char *str);
+void	free_table(t_table *table);
+
+int		init_threads(t_table **table);
+void	collect_philo(t_table **table);
+
+void	*life_cycle(void *p);
+
+size_t	get_time(void);
+size_t	time_stamp(time_t start);
+void	mysleep(size_t duration);
+
+/*********************  UTILS  *********************/
+void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
-int		ft_strfcmp(char *s1, char *s2);
-int		ft_isdigit(int c);
-int		ft_atox(const char *str);
-void	print_struct(t_table philo);
+void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-char	*ft_strdup(char *s1);
+int		ft_isdigit(int c);
+size_t	ft_atox(const char *str);
 
 #endif

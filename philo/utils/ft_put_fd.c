@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put.c                                           :+:      :+:    :+:   */
+/*   ft_put_fd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/02 23:56:57 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/21 14:26:03 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/01 23:22:15 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/02 00:04:56 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-/* 
-* writes only one character
-* uses the parameter fd to identify type of write return
-*/
 void	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
@@ -33,6 +29,21 @@ void	ft_putstr_fd(char *s, int fd)
 		ft_putchar_fd(s[i], fd);
 		i++;
 	}
+}
+
+void	ft_putendl_fd(char *s, int fd)
+{
+	size_t	i;
+
+	if (!s)
+		return ;
+	i = 0;
+	while (s[i])
+	{
+		ft_putchar_fd(s[i], fd);
+		i++;
+	}
+	ft_putchar_fd('\n', fd);
 }
 
 void	ft_putnbr_fd(int n, int fd)

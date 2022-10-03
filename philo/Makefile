@@ -5,31 +5,26 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/08/26 18:22:31 by ommohame          #+#    #+#              #
-#    Updated: 2022/09/24 15:24:26 by ommohame         ###   ########.fr        #
+#    Created: 2022/10/01 18:32:36 by ommohame          #+#    #+#              #
+#    Updated: 2022/10/04 01:31:03 by ommohame         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=		philo
 
 SRCS		=		main.c \
-					philo.c \
-					help.c \
 					parser.c \
-					fill_struct.c \
+					error_msg.c \
+					init_struct.c \
 					threads.c \
-					life.c \
+					memory.c \
+					life_cycle.c \
 					time.c \
-					check_death.c \
-					print_state.c \
+					log_msg.c \
 
-UTILS		=		ft_strlen.c \
-					ft_strdup.c \
-					ft_put_fd.c \
-					ft_strfcmp.c \
+UTILS		=		ft_put_fd.c \
 					ft_isdigit.c \
-					ft_atox.c	\
-					print_struct.c \
+					ft_atox.c \
 
 SRCS_DIR	=		./srcs/
 

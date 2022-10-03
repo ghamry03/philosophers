@@ -4,6 +4,10 @@
 		"random": "c",
 		"ratio": "c",
 		"locale": "c",
-		"string": "c"
+		"string": "c",
+		"limits.h": "c",
+		"pthread.h": "c",
+		"stdio.h": "c",
+		"__locale": "c"
 	}
 }
