@@ -6,14 +6,24 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:32:51 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/04 01:19:52 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:38:25 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURE_H
 # define STRUCTURE_H
 
-// # include "philo.h"
+/**
+ * 
+**/
+typedef struct s_info
+{
+	int			num;
+	int			t_eat;
+	int			t_death;
+	int			t_sleep;
+	int			repeat;
+}	t_info;
 
 /**
  * id: philosopher id
@@ -32,6 +42,7 @@
  * eat: time to eat
  * death: time to die
  * sleep: time to sleep
+ * neat: how many times the philosopher ate
  * repeat: number of times each philosopher should eat
  * last_eat: last time philosopher ate
  * left_mutex: mutex for the left fork
@@ -48,11 +59,9 @@ typedef struct s_philo
 	int				right_forkn;
 	int				*left_fork;
 	int				*right_fork;
-	int				eat;
-	int				death;
-	int				sleep;
-	ssize_t			repeat;
+	int				neat;
 	size_t			last_eat;
+	t_info			*info;
 	pthread_mutex_t	*left_mutex;
 	pthread_mutex_t	*right_mutex;
 	pthread_mutex_t	*print;
@@ -76,17 +85,13 @@ typedef struct s_philo
 **/
 typedef struct s_table
 {
-	int				num;
 	int				check_death;
 	size_t			start_time;
-	size_t			eat;
-	size_t			death;
-	size_t			sleep;
-	ssize_t			repeat;
 	int				*forks;
 	pthread_t		*threads;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	print;
+	t_info			*info;
 	t_philo			*philo;
 }	t_table;
 

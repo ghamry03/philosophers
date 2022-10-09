@@ -6,56 +6,43 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:27:47 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/04 01:39:43 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/09 15:44:44 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static int	init_forks(t_table **table)
+static int	init_forks(t_table **table, int num)
 {
 	int		i;
 
 	i = -1;
-	(*table)->forks = (int *)malloc(sizeof(int) * ((*table)->num));
+	(*table)->forks = (int *)malloc(sizeof(int) * num);
 	if (!(*table)->forks)
 	{
 		free(*table);
 		print_msg(SYS_ERR, MALLOC_ERR);
 		return (ERROR);
 	}
-	while (++i < (*table)->num)
+	while (++i < num)
 		(*table)->forks[i] = -1;
 	return (SUCCESS);
-}
-
-static	void	init_table_values(t_table **table, char **av)
-{
-	(*table)->num = ft_atox(av[1]);
-	(*table)->eat = ft_atox(av[2]);
-	(*table)->death = ft_atox(av[3]);
-	(*table)->sleep = ft_atox(av[4]);
-	(*table)->check_death = 0;
-	if (av[5])
-		(*table)->repeat = ft_atox(av[5]);
-	else
-		(*table)->repeat = -1;
 }
 
 static t_table	*init_table_struct(char **av)
 {
 	t_table		*table;
 
+	printf("hello\n");
 	table = (t_table *)malloc(sizeof(t_table));
 	if (!table)
 	{
 		print_msg(SYS_ERR, MALLOC_ERR);
 		return (NULL);
 	}
-	init_table_values(&table, av);
 	table->mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
-			* table->num);
-	table->threads = (pthread_t *)malloc(sizeof(pthread_t) * table->num);
+			* ft_atox(av[1]));
+	table->threads = (pthread_t *)malloc(sizeof(pthread_t) * ft_atox(av[1]));
 	if (!table->mutex || !table->threads)
 	{
 		print_msg(SYS_ERR, MALLOC_ERR);
@@ -66,9 +53,37 @@ static t_table	*init_table_struct(char **av)
 		free(table);
 		return (NULL);
 	}
-	if (init_forks(&table) == ERROR)
+	if (init_forks(&table, ft_atox(av[1])) == ERROR)
 		return (NULL);
 	return (table);
+}
+
+static t_info	*init_info_strcut(char **av)
+{
+	t_info		*info;
+
+	info = (t_info *)malloc(sizeof(t_info));
+	if (!info)
+	{
+		print_msg(SYS_ERR, MALLOC_ERR);
+		return (NULL);
+	}
+	info->num = ft_atox(av[1]);
+	info->t_death = ft_atox(av[2]);
+	info->t_eat = ft_atox(av[3]);
+	info->t_sleep = ft_atox(av[4]);
+	if (av[5])
+		info->repeat = ft_atox(av[5]);
+	else
+		info->repeat = -1;
+	if (info->num == 0 || info->t_death == 0
+		|| info->t_eat == 0 || info->t_sleep == 0)
+	{
+		print_msg(PAR_ERR, ZERO_ERR);
+		free(info);
+		return (NULL);
+	}
+	return (info);
 }
 
 static void	fill_philo_struct(t_table *table, t_philo *philo, int id)
@@ -80,22 +95,20 @@ static void	fill_philo_struct(t_table *table, t_philo *philo, int id)
 	(*philo).left_forkn = id;
 	(*philo).left_fork = &table->forks[id - 1];
 	(*philo).left_mutex = &table->mutex[id - 1];
-	if (id == table->num)
+	if (id == table->info->num)
 	{
-		(*philo).left_forkn = 0;
-		(*philo).left_fork = &table->forks[0];
-	(*philo).left_mutex = &table->mutex[0];
+		(*philo).right_forkn = 1;
+		(*philo).right_fork = &table->forks[0];
+		(*philo).right_mutex = &table->mutex[0];
 	}
 	else
 	{
-		(*philo).left_forkn = id;
-		(*philo).left_fork = &table->forks[id - 1];
-		(*philo).left_mutex = &table->mutex[id - 1];
+		(*philo).right_forkn = id + 1;
+		(*philo).right_fork = &table->forks[id];
+		(*philo).right_mutex = &table->mutex[id];
 	}
-	(*philo).eat = table->eat;
-	(*philo).death = table->death;
-	(*philo).sleep = table->sleep;
-	(*philo).repeat = table->sleep;
+	(*philo).info = table->info;
+	(*philo).neat = 0;
 	(*philo).last_eat = 0;
 	(*philo).print = &table->print;
 }
@@ -106,14 +119,14 @@ static t_philo	*init_philo_struct(t_table *table)
 	t_philo		*philo;
 
 	i = -1;
-	philo = (t_philo *)malloc(sizeof(t_philo) * (table->num));
+	philo = (t_philo *)malloc(sizeof(t_philo) * (table->info->num));
 	if (!philo)
 	{
 		free(table);
 		print_msg(SYS_ERR, MALLOC_ERR);
 		return (NULL);
 	}
-	while (++i < table->num)
+	while (++i < table->info->num)
 		fill_philo_struct(table, &(philo[i]), i + 1);
 	return (philo);
 }
@@ -125,9 +138,17 @@ t_table	*init_struct(char **av)
 	table = init_table_struct(av);
 	if (!table)
 		return (NULL);
+	table->info = init_info_strcut(av);
+	if (!table->info)
+	{
+		free(table->forks);
+		free(table);
+		return (NULL);
+	}
 	table->philo = init_philo_struct(table);
 	if (!table->philo)
 	{
+		free(table->info);
 		free(table->forks);
 		free(table);
 		return (NULL);

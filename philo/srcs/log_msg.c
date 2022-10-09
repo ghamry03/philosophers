@@ -6,19 +6,11 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 01:16:05 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/04 01:41:53 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/09 14:42:22 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
-
-static int	check_death(size_t last_eat, size_t current, size_t death_time)
-{
-	if (current - last_eat > death_time)
-		return (DEAD);
-	else
-		return (SUCCESS);
-}
 
 static void	fork_log(int n, int fork_n, int current)
 {
@@ -62,31 +54,21 @@ static void	thinking_log(int n, int current)
 	ft_putstr_fd(RESET, 1);
 }
 
-static void	dead_log(int n, int current)
-{
-	ft_putstr_fd(RED, 1);
-	ft_putnbr_fd(current, 1);
-	ft_putstr_fd(": philo "BOLDRED, 1);
-	ft_putnbr_fd(n, 1);
-	ft_putstr_fd(RESET RED" is dead 💀\n", 1);
-	ft_putstr_fd(RESET, 1);
-}
-
 int	print_state(t_philo *philo, int fork_n)
 {
 	time_t	current;
 
 	pthread_mutex_lock(philo->print);
 	current = time_stamp(*philo->start_time);
-	if (check_death(philo->last_eat, current, philo->death) == DEAD)
+	if (check_death(philo->last_eat, philo->info->t_death) == DEAD)
 	{
-		printf("HERE\n");
+		if (*philo->check_death != DEAD)
+			dead_log(philo->id, current);
 		*philo->check_death = DEAD;
 		pthread_mutex_unlock(philo->print);
-		dead_log(philo->id, current);
 		return (DEAD);
 	}
-	else if (*philo->check_death != DEAD)
+	else if (*philo->check_death != DEAD && fork_n != DEAD)
 	{
 		if (philo->state == P_FORK)
 			fork_log(philo->id, fork_n, current);

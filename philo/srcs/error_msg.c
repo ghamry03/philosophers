@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:50:49 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/04 01:11:31 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/04 23:36:22 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static void	parser_err(int num)
 		ft_putendl_fd("philo: error: non-digit character", 2);
 	else if (num == NMAX_ERR)
 		ft_putendl_fd("philo: error: number is more than int max", 2);
+	else if (num == ZERO_ERR)
+		ft_putendl_fd("philo: error: argument is equal to zero", 2);
 }
 
 void	print_msg(int type, int num)

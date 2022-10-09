@@ -6,13 +6,13 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:27:21 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/03 17:22:51 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/07 16:21:19 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static int	check_number(char *str, int f)
+static int	check_number(char *str)
 {
 	int	i;
 
@@ -25,7 +25,7 @@ static int	check_number(char *str, int f)
 			return (ERROR);
 		}
 	}
-	if (f == 1 && (i > 11 || ft_atox(str) > INT_MAX))
+	if (i > 11 || ft_atox(str) > INT_MAX)
 	{
 		print_msg(PAR_ERR, NMAX_ERR);
 		return (ERROR);
@@ -45,7 +45,7 @@ int	parser(int ac, char **av)
 	}
 	while (av[++i])
 	{
-		if (check_number(av[i], i) == ERROR)
+		if (check_number(av[i]) == ERROR)
 			return (ERROR);
 	}
 	return (SUCCESS);
