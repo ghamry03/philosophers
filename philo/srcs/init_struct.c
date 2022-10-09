@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:27:47 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/09 15:44:44 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/10 00:23:45 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ static t_table	*init_table_struct(char **av)
 {
 	t_table		*table;
 
-	printf("hello\n");
 	table = (t_table *)malloc(sizeof(t_table));
 	if (!table)
 	{
@@ -53,6 +52,7 @@ static t_table	*init_table_struct(char **av)
 		free(table);
 		return (NULL);
 	}
+	table->check_death = 0;
 	if (init_forks(&table, ft_atox(av[1])) == ERROR)
 		return (NULL);
 	return (table);

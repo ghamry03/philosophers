@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 18:15:42 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/09 01:02:08 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/10 00:12:27 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@
 # define SUCCESS 0
 # define ERROR	 1
 
-// FORKS SIDE
-# define LEFT	0			// left fork
+// FORKS
+# define LEFT	0		// left fork
 # define RIGHT	1		// right fork
+# define FREE	1			// fork is available to pick
+# define USED	0			// fork is being used by a philo
 
 //	PHILOSOPHER STATE
 # define DEAD	-2		// dead

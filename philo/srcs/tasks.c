@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 08:18:00 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/09 14:41:45 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/10 00:25:11 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,44 @@ static int	check_fork(t_philo *philo, pthread_mutex_t *lock, int f)
 		fork = philo->right_fork;
 		forkn = philo->right_forkn;
 	}
-	if ((*fork && *fork != -1 && *fork != philo->id)
+	if ((*fork == FREE && *fork != -1)
 		|| (*fork == -1 && philo->id % 2 != 0))
 	{
-			*fork = 0;
+			*fork = USED;
 			ret = print_state(philo, forkn);
 	}
 	else
 		ret = ERROR;
 	pthread_mutex_unlock(lock);
 	return (ret);
+}
+
+static void	which_fork(t_philo *philo, int *side, pthread_mutex_t **lock, int f)
+{
+	if (f == 0)
+	{
+		if (philo->id % 2 == 0)
+		{
+			*side = LEFT;
+			*lock = philo->left_mutex;
+		}
+		else
+		{
+			*side = RIGHT;
+			*lock = philo->right_mutex;
+		}
+		return ;
+	}
+	if (philo->id % 2 == 0)
+	{
+		*side = RIGHT;
+		*lock = philo->right_mutex;
+	}
+	else
+	{
+		*side = LEFT;
+		*lock = philo->left_mutex;
+	}
 }
 
 int	forks(t_philo *philo)
@@ -49,8 +77,7 @@ int	forks(t_philo *philo)
 	pthread_mutex_t	*lock;
 
 	fork_check = 0;
-	side = LEFT;
-	lock = philo->left_mutex;
+	which_fork(philo, &side, &lock, fork_check);
 	while (fork_check < 2)
 	{
 		if (philo->neat == 0 && fork_check == 0)
@@ -59,8 +86,7 @@ int	forks(t_philo *philo)
 		if (ret == SUCCESS)
 		{
 			fork_check++;
-			side = RIGHT;
-			lock = philo->right_mutex;
+			which_fork(philo, &side, &lock, fork_check);
 		}
 		else if (ret == DEAD)
 			return (DEAD);
@@ -81,10 +107,10 @@ int	eat(t_philo *philo)
 	if (mysleep(philo, philo->info->t_eat) == DEAD)
 		ret = DEAD;
 	pthread_mutex_lock(philo->left_mutex);
-	*philo->left_fork = philo->id;
+	*philo->left_fork = FREE;
 	pthread_mutex_unlock(philo->left_mutex);
 	pthread_mutex_lock(philo->right_mutex);
-	*philo->right_fork = philo->id;
+	*philo->right_fork = FREE;
 	pthread_mutex_unlock(philo->right_mutex);
 	philo->last_eat = get_time();
 	philo->neat++;
