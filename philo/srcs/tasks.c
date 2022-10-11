@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 08:18:00 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/10 10:58:15 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/11 13:02:56 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	eat(t_philo *philo)
 	ret = print_state(philo, -1);
 	if (ret == DEAD)
 		return (DEAD);
-	if (mysleep(philo, philo->info->t_eat) == DEAD)
+	if (mysleep(philo, philo->info->t_eat))
 		ret = DEAD;
 	pthread_mutex_lock(philo->left_mutex);
 	*philo->left_fork = FREE;
