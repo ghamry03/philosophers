@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 01:16:05 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/10 00:52:46 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:48:50 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,30 @@ int	print_state(t_philo *philo, int fork_n)
 {
 	time_t	current;
 
-	pthread_mutex_lock(philo->print);
 	current = time_stamp(*philo->start_time);
-	if (check_death(philo->last_eat, philo->info->t_death) == DEAD)
-	{
-		if (*philo->check_death != DEAD)
-			dead_log(philo->id, current);
-		*philo->check_death = DEAD;
-		pthread_mutex_unlock(philo->print);
-		return (DEAD);
-	}
-	else if (*philo->check_death != DEAD && fork_n != DEAD)
-	{
-		if (philo->state == P_FORK)
-			fork_log(philo->id, fork_n, current);
-		else if (philo->state == EAT)
-			eating_log(philo->id, current);
+	// if (check_death(philo->last_eat, philo->info->t_death) == DEAD)
+	// {
+	// 	if (*philo->check_death != DEAD)
+	// 		dead_log(philo->id, current);
+	// 	*philo->check_death = DEAD;
+	// 	pthread_mutex_unlock(philo->print);
+	// 	return (DEAD);
+	// }
+	// else if (*philo->check_death != DEAD && fork_n != DEAD)
+	// {
+	// int value;
+	// sem_getvalue(philo->info->print_sem, &value);
+	// printf("sem value: %d\n", value);
+	// sem_getvalue(philo->info->print_sem, &value);
+	sem_wait(philo->info->print_sem);
+	if (philo->state == P_FORK)
+		fork_log(philo->id, fork_n, current);
+	else if (philo->state == EAT)
+		eating_log(philo->id, current);
 		else if (philo->state == SLEEP)
 			sleeping_log(philo->id, current);
 		else if (philo->state == THINK)
 			thinking_log(philo->id, current);
-	}
-	pthread_mutex_unlock(philo->print);
+	sem_post(philo->info->print_sem);
 	return (SUCCESS);
 }

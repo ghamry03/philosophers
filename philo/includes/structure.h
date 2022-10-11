@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:32:51 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/09 14:38:25 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/10 00:45:08 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 # define STRUCTURE_H
 
 /**
- * 
+ * eat: time to eat
+ * death: time to die
+ * sleep: time to sleep
+ * repeat: number of times each philosopher should eat 
 **/
 typedef struct s_info
 {

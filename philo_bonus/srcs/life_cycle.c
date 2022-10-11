@@ -6,33 +6,31 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 23:29:18 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/10 00:50:12 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:42:42 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	*life_cycle(void *p)
+void	life_cycle(t_philo *philo)
 {
-	t_philo		*philo;
-
-	philo = (t_philo *)p;
-	while (*philo->check_death != DEAD)
+	int		i = 0;
+	while (i < 2)
 	{
 		if (philo->state == P_FORK)
 			if (forks(philo) == DEAD)
-				break ;
+				return ;
 		if (philo->state == EAT)
 			if (eat(philo) == DEAD)
-				break ;
+				return ;
 		if (philo->state == SLEEP)
 			if (sleeep(philo) == DEAD)
-				break ;
+				return ;
 		if (philo->state == THINK)
 			if (think(philo) == DEAD)
-				break ;
+				return ;
 		if (philo->info->repeat != -1 && philo->neat == philo->info->repeat)
-			return (NULL);
+			return ;
+		i++;
 	}
-	return (NULL);
 }
