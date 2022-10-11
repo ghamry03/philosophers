@@ -1,0 +1,7 @@
+{
+	"files.associations": {
+		"random": "c",
+		"locale": "c",
+		"string": "c"
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 08:18:00 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/11 13:05:29 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/11 13:28:11 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int	forks(t_philo *philo)
 int	eat(t_philo *philo)
 {
 	print_state(philo, -1);
+	philo->last_eat = get_time();
 	mysleep(philo, philo->info->t_eat);
 	pthread_mutex_lock(philo->left_mutex);
 	*philo->left_fork = FREE;
