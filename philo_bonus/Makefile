@@ -6,7 +6,7 @@
 #    By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/01 18:32:36 by ommohame          #+#    #+#              #
-#    Updated: 2022/10/11 12:30:40 by ommohame         ###   ########.fr        #
+#    Updated: 2022/10/11 15:02:32 by ommohame         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ INCLUDES	=		./includes
 
 CC			=		gcc
 
-CFLAGS		=		 -pthread -g3
+CFLAGS		=		-Wall -Werror -Wextra -pthread -g3
 
 OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 

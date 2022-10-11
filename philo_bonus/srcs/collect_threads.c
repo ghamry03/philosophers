@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:42:55 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/11 12:18:20 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 00:06:12 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	wait_philo(t_table **table)
 	}
 }
 
-static void	close_sem(t_table **table)
+void	close_sem(t_table **table)
 {
 	sem_close((*table)->info->forks_sem);
 	sem_close((*table)->info->print_sem);

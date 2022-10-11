@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 23:35:56 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/10 14:58:25 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 01:58:54 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	get_time(void)
 	return (ret);
 }
 
-size_t	time_stamp(time_t start)
+size_t	time_stamp(size_t start)
 {
 	return (get_time() - start);
 }
@@ -37,14 +37,7 @@ int	mysleep(t_philo *philo, size_t duration)
 
 	time = get_time();
 	while (get_time () < time + duration)
-	{
-		if (check_death(philo->last_eat, philo->info->t_death) == DEAD)
-		{
-			if (*philo->check_death != DEAD)
-				dead_log(philo->id, time_stamp(*philo->start_time));
-			return (DEAD);
-		}
 		usleep(10);
-	}
+	(void)philo;
 	return (SUCCESS);
 }

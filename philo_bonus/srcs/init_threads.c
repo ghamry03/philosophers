@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:21:46 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/11 12:50:52 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 02:08:47 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static int	init_sem(t_table **table)
 		print_msg(SYS_ERR, SEMOPEN_ERR);
 		return (ERROR);
 	}
+	sem_wait((*table)->info->death_sem);
 	return (SUCCESS);
 }
 
@@ -39,6 +40,7 @@ static int	create_process(t_table **table)
 	(*table)->start_time = get_time();
 	while (++i < (*table)->info->num)
 	{
+		(*table)->philo->info = (*table)->info;
 		(*table)->philo_pid[i] = fork();
 		if ((*table)->philo_pid[i] == -1)
 		{
@@ -49,6 +51,7 @@ static int	create_process(t_table **table)
 		else if (!(*table)->philo_pid[i])
 		{
 			life_cycle(&((*table)->philo[i]));
+			close_sem(table);
 			free_table(*table);
 			exit(SUCCESS);
 		}
@@ -62,5 +65,7 @@ int	init_philo(t_table **table)
 		return (ERROR);
 	if (create_process(table) == ERROR)
 		return (ERROR);
+	sem_wait(((*table)->info->death_sem));
+	kill_the_childs((*table)->philo_pid, (*table)->info->num);
 	return (SUCCESS);
 }

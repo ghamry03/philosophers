@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:27:47 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/11 10:14:05 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 00:05:53 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static t_table	*init_table_struct(char **av)
 		print_msg(SYS_ERR, MALLOC_ERR);
 		return (NULL);
 	}
-	table->check_death = 0;
 	table->philo_pid = (pid_t *)malloc(sizeof(pid_t) * ft_atox(av[1]));
 	if (!table->philo_pid)
 	{
@@ -65,7 +64,6 @@ static void	fill_philo_struct(t_table *table, t_philo *philo, int id)
 {
 	(*philo).id = id;
 	(*philo).state = P_FORK;
-	(*philo).check_death = &table->check_death;
 	(*philo).start_time = &table->start_time;
 	(*philo).info = table->info;
 	(*philo).neat = 0;

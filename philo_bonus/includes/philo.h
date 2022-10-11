@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 18:15:42 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/11 12:43:12 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 02:03:42 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <sys/time.h>
 # include <semaphore.h>
+# include <signal.h>
 # include "structure.h"
 
 /********************* DEFINES *********************/
@@ -83,11 +84,12 @@ int		parser(int ac, char **av);
 t_table	*init_struct(char **av);
 
 void	print_msg(int type, int num);
-int		print_state(t_philo *philo, int fork_n);
+int		print_state(t_philo *philo, int f);
 
 void	free_table(t_table *table);
 
 int		init_philo(t_table **table);
+void	close_sem(t_table **table);
 void	collect_philo(t_table **table);
 
 void	life_cycle(t_philo *philo);
@@ -96,11 +98,12 @@ int		eat(t_philo *philo);
 int		sleeep(t_philo *philo);
 int		think(t_philo *philo);
 
-int		check_death(size_t last_eat, size_t death_time);
-void	dead_log(int n, int current);
+void	*check_death(void *p);
+void	dead_log(int n, size_t current);
+void	kill_the_childs(pid_t *pid, int num);
 
 size_t	get_time(void);
-size_t	time_stamp(time_t start);
+size_t	time_stamp(size_t start);
 int		mysleep(t_philo *philo, size_t duration);
 
 /*********************  UTILS  *********************/

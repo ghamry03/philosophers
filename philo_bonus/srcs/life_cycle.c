@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 23:29:18 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/11 12:42:42 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 01:40:05 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,12 @@
 
 void	life_cycle(t_philo *philo)
 {
-	int		i = 0;
-	while (i < 2)
+	pthread_t	check_deatht;
+
+	pthread_create(&check_deatht, NULL, &check_death, &philo);
+	if (philo->id % 2 == 0)
+		mysleep(philo, philo->info->t_eat);
+	while (1)
 	{
 		if (philo->state == P_FORK)
 			if (forks(philo) == DEAD)
@@ -31,6 +35,5 @@ void	life_cycle(t_philo *philo)
 				return ;
 		if (philo->info->repeat != -1 && philo->neat == philo->info->repeat)
 			return ;
-		i++;
 	}
 }
