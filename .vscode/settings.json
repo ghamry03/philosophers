@@ -5,6 +5,11 @@
 		"philo.h": "c",
 		"unistd.h": "c",
 		"stdlib.h": "c",
-		"limits.h": "c"
+		"limits.h": "c",
+		"time.h": "c",
+		"semaphore.h": "c",
+		"structure.h": "c",
+		"signal.h": "c",
+		"__locale": "c"
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   death.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:39:29 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 02:11:58 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:33:57 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ void	*check_death(void *p)
 	while (1)
 	{
 		current = time_stamp(philo->last_eat);
-		if (current > (unsigned int)philo->info->t_death && philo->last_eat != 0)
+		if (current > (unsigned int)philo->info->t_death
+			&& philo->last_eat != 0)
 		{
 			sem_wait(philo->info->print_sem);
-			dead_log(philo->id, current);
+			dead_log(philo->id, time_stamp(*philo->start_time));
 			sem_post(philo->info->death_sem);
 			break ;
 		}
@@ -47,8 +48,7 @@ void	kill_the_childs(pid_t *pid, int num)
 {
 	int		i;
 
-	i = 0;
-	printf("children killer\n");
-	while (i < num)
+	i = -1;
+	while (++i < num)
 		kill(pid[i], SIGKILL);
 }

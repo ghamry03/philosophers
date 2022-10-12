@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structure.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:32:51 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 01:38:22 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 12:51:47 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

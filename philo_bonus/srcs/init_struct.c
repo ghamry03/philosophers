@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:27:47 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 00:05:53 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 12:52:20 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,6 @@ static void	fill_philo_struct(t_table *table, t_philo *philo, int id)
 	(*philo).info = table->info;
 	(*philo).neat = 0;
 	(*philo).last_eat = 0;
-	// (*philo).forks_sem = &table->forks_sem;
-	// (*philo).print_sem = &table->print_sem;
-	// (*philo).death_sem = &table->death_sem;
 }
 
 static t_philo	*init_philo_struct(t_table *table)

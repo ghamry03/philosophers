@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_threads.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:21:46 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 02:08:47 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 12:24:40 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	init_sem(t_table **table)
 		print_msg(SYS_ERR, SEMOPEN_ERR);
 		return (ERROR);
 	}
-	sem_wait((*table)->info->death_sem);
 	return (SUCCESS);
 }
 
@@ -38,9 +37,9 @@ static int	create_process(t_table **table)
 
 	i = -1;
 	(*table)->start_time = get_time();
+	sem_wait((*table)->info->death_sem);
 	while (++i < (*table)->info->num)
 	{
-		(*table)->philo->info = (*table)->info;
 		(*table)->philo_pid[i] = fork();
 		if ((*table)->philo_pid[i] == -1)
 		{

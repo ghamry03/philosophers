@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   log_msg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 01:16:05 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 00:02:34 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 09:59:03 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
