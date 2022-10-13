@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 23:35:56 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/11 13:24:27 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/12 21:20:29 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	mysleep(t_philo *philo, size_t duration)
 			pthread_mutex_unlock(philo->print);
 			return (DEAD);
 		}
+		usleep(500);
 	}
 	return (SUCCESS);
 }

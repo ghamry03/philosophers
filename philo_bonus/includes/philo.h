@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 18:15:42 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 02:03:42 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 08:57:45 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@
 # define PAR_ERR 		1		// parser error
 
 //	SYSTEM ERROR
-# define MALLOC_ERR		0	// malloc fails
-# define THREAD_ERR 	2	// creating thread fails
-# define JOIN_ERR		3	// joining thread fails
-# define SEMOPEN_ERR 	4	// semopen fails
-# define FORK_ERR		5	// fork function fails
+# define MALLOC_ERR		0	// malloc failed
+# define THREAD_ERR 	2	// creating thread failed
+# define JOIN_ERR		3	// joining thread failed
+# define SEMOPEN_ERR 	4	// semopen function failed
+# define FORK_ERR		5	// fork function failed
+# define KILL_ERR		6	// kill function failed
 
 //	PARSER ERROR
 # define INV_ARG		0	// invalid argument
@@ -84,7 +85,7 @@ int		parser(int ac, char **av);
 t_table	*init_struct(char **av);
 
 void	print_msg(int type, int num);
-int		print_state(t_philo *philo, int f);
+int		print_state(t_philo *philo);
 
 void	free_table(t_table *table);
 
@@ -98,13 +99,11 @@ int		eat(t_philo *philo);
 int		sleeep(t_philo *philo);
 int		think(t_philo *philo);
 
-void	*check_death(void *p);
-void	dead_log(int n, size_t current);
-void	kill_the_childs(pid_t *pid, int num);
+void	terminate_proc(pid_t *pid, int num);
 
 size_t	get_time(void);
 size_t	time_stamp(size_t start);
-int		mysleep(t_philo *philo, size_t duration);
+void	mysleep(size_t duration);
 
 /*********************  UTILS  *********************/
 void	ft_putchar_fd(char c, int fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   log_msg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 01:16:05 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 09:59:03 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 08:51:41 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,10 @@ static void	thinking_log(int n, int current)
 	ft_putstr_fd(RESET, 1);
 }
 
-int	print_state(t_philo *philo, int f)
+int	print_state(t_philo *philo)
 {
 	time_t	current;
 
-	// if (check_death(philo->last_eat, philo->info->t_death) == DEAD)
-	// {
-	// 	if (*philo->check_death != DEAD)
-	// 		dead_log(philo->id, current);
-	// 	*philo->check_death = DEAD;
-	// 	pthread_mutex_unlock(philo->print);
-	// 	return (DEAD);
-	// }
-	// else if (*philo->check_death != DEAD && fork_n != DEAD)
-	// {
-	// sem_getvalue(philo->info->print_sem, &value);
-	(void)f;
 	sem_wait(philo->info->print_sem);
 	current = time_stamp(*philo->start_time);
 	if (philo->state == P_FORK)
@@ -76,9 +64,9 @@ int	print_state(t_philo *philo, int f)
 	else if (philo->state == EAT)
 		eating_log(philo->id, current);
 	else if (philo->state == SLEEP)
-			sleeping_log(philo->id, current);
+		sleeping_log(philo->id, current);
 	else if (philo->state == THINK)
-			thinking_log(philo->id, current);
+		thinking_log(philo->id, current);
 	sem_post(philo->info->print_sem);
 	return (SUCCESS);
 }

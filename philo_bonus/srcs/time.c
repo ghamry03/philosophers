@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 23:35:56 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 12:22:03 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 08:44:19 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,11 @@ size_t	time_stamp(size_t start)
 	return (get_time() - start);
 }
 
-int	mysleep(t_philo *philo, size_t duration)
+void	mysleep(size_t duration)
 {
 	size_t	time;
 
 	time = get_time();
 	while (get_time () < time + duration)
-		usleep(10);
-	(void)philo;
-	return (SUCCESS);
+		usleep(500);
 }

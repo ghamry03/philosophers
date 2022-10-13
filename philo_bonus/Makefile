@@ -6,7 +6,7 @@
 #    By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/01 18:32:36 by ommohame          #+#    #+#              #
-#    Updated: 2022/10/11 15:02:32 by ommohame         ###   ########.fr        #
+#    Updated: 2022/10/13 08:51:03 by ommohame         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,14 +16,12 @@ SRCS		=		main.c				\
 					parser.c			\
 					error_msg.c			\
 					init_struct.c		\
-					init_threads.c		\
-					collect_threads.c	\
-					memory.c			\
+					init_philo.c		\
+					terminate_proc.c	\
 					life_cycle.c		\
 					tasks.c				\
 					time.c				\
 					log_msg.c			\
-					death.c				\
 
 UTILS		=		ft_put_fd.c			\
 					ft_isdigit.c		\

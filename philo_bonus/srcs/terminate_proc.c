@@ -1,16 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   collect_threads.c                                  :+:      :+:    :+:   */
+/*   terminate_proc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:42:55 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 10:00:02 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 09:06:01 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	terminate_proc(pid_t *pid, int num)
+{
+	int		i;
+
+	i = -1;
+	while (++i < num)
+	{
+		if (kill(pid[i], SIGKILL))
+			print_msg(SYS_ERR, KILL_ERR);
+	}
+}
+
+void	free_table(t_table *table)
+{
+	free(table->philo);
+	free(table->info);
+	free(table->philo_pid);
+	free(table);
+}
 
 static void	wait_philo(t_table **table)
 {
@@ -30,6 +50,7 @@ void	close_sem(t_table **table)
 
 void	collect_philo(t_table **table)
 {
+	terminate_proc((*table)->philo_pid, (*table)->info->num);
 	wait_philo(table);
 	close_sem(table);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_threads.c                                     :+:      :+:    :+:   */
+/*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:21:46 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/12 12:24:40 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 09:01:31 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,5 @@ int	init_philo(t_table **table)
 	if (create_process(table) == ERROR)
 		return (ERROR);
 	sem_wait(((*table)->info->death_sem));
-	kill_the_childs((*table)->philo_pid, (*table)->info->num);
 	return (SUCCESS);
 }
