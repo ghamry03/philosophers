@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 18:14:58 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/09 15:35:52 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 10:42:05 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+t_table	*init_struct(char **av)
+{
+	t_table	*table;
+
+	table = init_table_struct(av);
+	if (!table)
+		return (NULL);
+	table->info = init_info_strcut(av);
+	if (!table->info)
+	{
+		free(table->forks);
+		free(table);
+		return (NULL);
+	}
+	table->philo = init_philo_struct(table);
+	if (!table->philo)
+	{
+		free(table->info);
+		free(table->forks);
+		free(table);
+		return (NULL);
+	}
+	return (table);
+}
 
 int	philo(int ac, char **av)
 {

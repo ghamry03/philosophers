@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:27:47 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/10 00:23:45 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 10:41:47 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static int	init_forks(t_table **table, int num)
+int	init_forks(t_table **table, int num)
 {
 	int		i;
 
@@ -29,7 +29,7 @@ static int	init_forks(t_table **table, int num)
 	return (SUCCESS);
 }
 
-static t_table	*init_table_struct(char **av)
+t_table	*init_table_struct(char **av)
 {
 	t_table		*table;
 
@@ -58,7 +58,7 @@ static t_table	*init_table_struct(char **av)
 	return (table);
 }
 
-static t_info	*init_info_strcut(char **av)
+t_info	*init_info_strcut(char **av)
 {
 	t_info		*info;
 
@@ -86,7 +86,7 @@ static t_info	*init_info_strcut(char **av)
 	return (info);
 }
 
-static void	fill_philo_struct(t_table *table, t_philo *philo, int id)
+void	fill_philo_struct(t_table *table, t_philo *philo, int id)
 {
 	(*philo).id = id;
 	(*philo).state = P_FORK;
@@ -113,7 +113,7 @@ static void	fill_philo_struct(t_table *table, t_philo *philo, int id)
 	(*philo).print = &table->print;
 }
 
-static t_philo	*init_philo_struct(t_table *table)
+t_philo	*init_philo_struct(t_table *table)
 {
 	int			i;
 	t_philo		*philo;
@@ -129,29 +129,4 @@ static t_philo	*init_philo_struct(t_table *table)
 	while (++i < table->info->num)
 		fill_philo_struct(table, &(philo[i]), i + 1);
 	return (philo);
-}
-
-t_table	*init_struct(char **av)
-{
-	t_table	*table;
-
-	table = init_table_struct(av);
-	if (!table)
-		return (NULL);
-	table->info = init_info_strcut(av);
-	if (!table->info)
-	{
-		free(table->forks);
-		free(table);
-		return (NULL);
-	}
-	table->philo = init_philo_struct(table);
-	if (!table->philo)
-	{
-		free(table->info);
-		free(table->forks);
-		free(table);
-		return (NULL);
-	}
-	return (table);
 }

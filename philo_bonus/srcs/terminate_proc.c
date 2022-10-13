@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   terminate_proc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:42:55 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 09:06:01 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:15:51 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:21:46 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 09:01:31 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:10:08 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   life_cycle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 23:29:18 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 09:14:10 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:51:49 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*life_cycle(void *p)
 	t_philo		*philo;
 
 	philo = (t_philo *)p;
-	while (*philo->check_death != DEAD)
+	while (1)
 	{
 		if (forks(philo) == DEAD)
 			break ;

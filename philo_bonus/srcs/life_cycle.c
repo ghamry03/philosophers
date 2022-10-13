@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   life_cycle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 23:29:18 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 08:59:07 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:15:36 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
