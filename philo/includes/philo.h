@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 18:15:42 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 12:52:55 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:53:53 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	free_table(t_table *table);
 
 int		init_threads(t_table **table);
 void	collect_philo(t_table **table);
-int		init_forks(t_table **table, int num);
 t_table	*init_table_struct(char **av);
 t_info	*init_info_strcut(char **av);
 void	fill_philo_struct(t_table *table, t_philo *philo, int id);

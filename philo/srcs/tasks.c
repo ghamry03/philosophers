@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tasks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 08:18:00 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 12:42:25 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:54:41 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 int	eat(t_philo *philo)
 {
-	// int		ret;
+	int		ret;
 
-	philo->last_eat = get_time();
 	print_state(philo, -1);
-	mysleep(philo, philo->info->t_eat);
-		// ret = DEAD;
+	philo->last_eat = get_time();
+	if (mysleep(philo, philo->info->t_eat) == DEAD)
+		ret = DEAD;
 	pthread_mutex_lock(philo->left_mutex);
 	*philo->left_fork = FREE;
 	pthread_mutex_unlock(philo->left_mutex);
@@ -28,7 +28,7 @@ int	eat(t_philo *philo)
 	pthread_mutex_unlock(philo->right_mutex);
 	philo->neat++;
 	philo->state = SLEEP;
-	return (SUCCESS);
+	return (ret);
 }
 
 int	sleeep(t_philo *philo)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tasks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 08:18:00 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 11:03:45 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:56:26 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	forks(t_philo *philo)
 int	eat(t_philo *philo)
 {
 	print_state(philo);
-	mysleep(philo->info->t_eat);
 	philo->last_eat = get_time();
+	mysleep(philo->info->t_eat);
 	sem_post(philo->info->forks_sem);
 	sem_post(philo->info->forks_sem);
 	philo->neat++;
