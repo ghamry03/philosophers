@@ -6,15 +6,13 @@
 /*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 09:12:06 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 13:07:53 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:34:53 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-#define mutex pthread_mutex_t
-
-static int	check_fork(t_philo *philo, mutex *lock, int f)
+static int	check_fork(t_philo *philo, pthread_mutex_t *lock, int f)
 {
 	int		*fork;
 	int		forkn;
@@ -43,7 +41,7 @@ static int	check_fork(t_philo *philo, mutex *lock, int f)
 	return (ret);
 }
 
-static void	which_fork(t_philo *philo, int *side, mutex **lock, int f)
+static void	which_fork(t_philo *philo, int *side, pthread_mutex_t **lock, int f)
 {
 	if (f == 0)
 	{
@@ -76,7 +74,7 @@ int	forks(t_philo *philo)
 	int				ret;
 	int				side;
 	int				fork_check;
-	mutex	*lock;
+	pthread_mutex_t	*lock;
 
 	fork_check = 0;
 	which_fork(philo, &side, &lock, fork_check);

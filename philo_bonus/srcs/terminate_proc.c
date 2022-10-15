@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:42:55 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 11:15:51 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:21:42 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	close_sem(t_table **table)
 
 void	collect_philo(t_table **table)
 {
-	terminate_proc((*table)->philo_pid, (*table)->info->num);
+	if ((*table)->info->repeat != -1 && ((*table)->info->total_meals == (*table)->info->num * (*table)->info->repeat))
+		terminate_proc((*table)->philo_pid, (*table)->info->num);
 	wait_philo(table);
 	close_sem(table);
 }

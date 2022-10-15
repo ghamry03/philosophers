@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:21:46 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 11:10:08 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:53:37 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,16 @@ static int	init_sem(t_table **table)
 	sem_unlink("/forks_sem");
 	sem_unlink("/print_sem");
 	sem_unlink("/death_sem");
+	sem_unlink("/meals_sem");
 	(*table)->info->forks_sem = sem_open("/forks_sem", O_CREAT, 0644,
 			(*table)->info->num);
 	(*table)->info->print_sem = sem_open("/print_sem", O_CREAT, 0644, 1);
 	(*table)->info->death_sem = sem_open("/death_sem", O_CREAT, 0644, 1);
+	(*table)->info->meals_sem = sem_open("/meals_sem", O_CREAT, 0644, 1);
 	if ((*table)->info->forks_sem == SEM_FAILED
 		|| (*table)->info->print_sem == SEM_FAILED
-		|| (*table)->info->death_sem == SEM_FAILED)
+		|| (*table)->info->death_sem == SEM_FAILED
+		|| (*table)->info->meals_sem == SEM_FAILED)
 	{
 		print_msg(SYS_ERR, SEMOPEN_ERR);
 		return (ERROR);
@@ -64,6 +67,6 @@ int	init_philo(t_table **table)
 		return (ERROR);
 	if (create_process(table) == ERROR)
 		return (ERROR);
-	sem_wait(((*table)->info->death_sem));
+	sem_wait((*table)->info->death_sem);
 	return (SUCCESS);
 }

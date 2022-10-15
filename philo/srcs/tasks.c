@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tasks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 08:18:00 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 16:54:41 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:35:59 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	eat(t_philo *philo)
 {
 	int		ret;
 
+	ret = SUCCESS;
 	print_state(philo, -1);
 	philo->last_eat = get_time();
 	if (mysleep(philo, philo->info->t_eat) == DEAD)

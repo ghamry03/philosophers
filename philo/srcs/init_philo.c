@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:21:46 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 12:36:05 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:35:07 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ static int	creat_threads(t_table **table)
 		{
 			print_msg(SYS_ERR, THREAD_ERR);
 			free_table(*table);
-			// usleep(50);
 			return (ERROR);
 		}
 	}

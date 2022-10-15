@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 16:27:21 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 13:18:45 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:39:30 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,12 @@ static int	check_number(char *str)
 			print_msg(PAR_ERR, NDGT_ERR);
 			return (ERROR);
 		}
-		i += 2147483649;
-		printf("%d\n", i);
-	}
-	if (i > 11 || ft_atox(str) > INT_MAX)
-	{
-		print_msg(PAR_ERR, NMAX_ERR);
-		return (ERROR);
+		i++;
+		if (i > 11 || ft_atox(str) > INT_MAX)
+		{
+			print_msg(PAR_ERR, NMAX_ERR);
+			return (ERROR);
+		}
 	}
 	return (SUCCESS);
 }

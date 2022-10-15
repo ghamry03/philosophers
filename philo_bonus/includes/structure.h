@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:32:51 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 11:16:26 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/15 16:43:58 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ typedef struct s_info
 	int			t_death;
 	int			t_sleep;
 	int			repeat;
+	size_t		total_meals;
 	sem_t		*forks_sem;
 	sem_t		*print_sem;
 	sem_t		*death_sem;
+	sem_t		*meals_sem;
 }	t_info;
 
 typedef struct s_philo
