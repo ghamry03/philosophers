@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 00:27:47 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/15 16:44:58 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:11:10 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static t_info	*init_info_strcut(char **av)
 		free(info);
 		return (NULL);
 	}
-	info->total_meals = 0;
 	return (info);
 }
 

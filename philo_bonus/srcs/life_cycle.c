@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   life_cycle.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 23:29:18 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/15 16:52:01 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/16 01:08:12 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static void	*check_death(void *p)
 	philo = (t_philo *)p;
 	while (1)
 	{
+		sem_wait(philo->last_meal);
 		current = time_stamp(philo->last_eat);
 		if (current > (unsigned int)philo->info->t_death
 			&& philo->last_eat != 0)
@@ -37,9 +38,11 @@ static void	*check_death(void *p)
 			sem_wait(philo->info->print_sem);
 			dead_log(philo->id, time_stamp(*philo->start_time));
 			sem_post(philo->info->death_sem);
+			reset_meals_sem(philo->info);
 			break ;
 		}
-		usleep(500);
+		sem_post(philo->last_meal);
+		usleep(1000);
 	}
 	return (NULL);
 }
@@ -56,9 +59,11 @@ void	life_cycle(t_philo *philo)
 	{
 		forks(philo);
 		eat(philo);
-		sleeep(philo);
-		think(philo);
 		if (philo->info->repeat != -1 && philo->neat == philo->info->repeat)
 			break ;
+		sleeep(philo);
+		think(philo);
 	}
+	sem_post(philo->info->meals_sem);
+	sem_post(philo->info->death_sem);
 }

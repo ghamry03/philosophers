@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   terminate_proc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:42:55 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/15 18:21:42 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:16:51 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
+
+void	reset_meals_sem(t_info *info)
+{
+	int		i;
+
+	i = -1;
+	while (++i < info->num)
+		sem_post(info->meals_sem);
+}
 
 void	terminate_proc(pid_t *pid, int num)
 {
@@ -50,8 +59,7 @@ void	close_sem(t_table **table)
 
 void	collect_philo(t_table **table)
 {
-	if ((*table)->info->repeat != -1 && ((*table)->info->total_meals == (*table)->info->num * (*table)->info->repeat))
-		terminate_proc((*table)->philo_pid, (*table)->info->num);
+	terminate_proc((*table)->philo_pid, (*table)->info->num);
 	wait_philo(table);
 	close_sem(table);
 }

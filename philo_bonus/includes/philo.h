@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 18:15:42 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/13 10:42:55 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:43:25 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	free_table(t_table *table);
 int		init_philo(t_table **table);
 void	close_sem(t_table **table);
 void	collect_philo(t_table **table);
+void	reset_meals_sem(t_info *info);
 
 void	life_cycle(t_philo *philo);
 int		forks(t_philo *philo);
@@ -112,5 +113,7 @@ void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
 int		ft_isdigit(int c);
 size_t	ft_atox(const char *str);
+char	*ft_itoa(int n);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
