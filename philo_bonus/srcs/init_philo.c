@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 18:21:46 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/16 01:09:49 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:09:05 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,32 +36,18 @@ static int	init_sem(t_table **table)
 	sem_unlink("/forks_sem");
 	sem_unlink("/print_sem");
 	sem_unlink("/death_sem");
-	sem_unlink("/meals_sem");
 	last_meal_sem(table);
 	(*table)->info->forks_sem = sem_open("/forks_sem", O_CREAT, 0644,
-			(*table)->info->num);
-	(*table)->info->meals_sem = sem_open("/meals_sem", O_CREAT, 0644,
 			(*table)->info->num);
 	(*table)->info->print_sem = sem_open("/print_sem", O_CREAT, 0644, 1);
 	(*table)->info->death_sem = sem_open("/death_sem", O_CREAT, 0644, 1);
 	if ((*table)->info->forks_sem == SEM_FAILED
 		|| (*table)->info->print_sem == SEM_FAILED
-		|| (*table)->info->death_sem == SEM_FAILED
-		|| (*table)->info->meals_sem == SEM_FAILED)
+		|| (*table)->info->death_sem == SEM_FAILED)
 	{
 		print_msg(SYS_ERR, SEMOPEN_ERR);
 		return (ERROR);
 	}
-	return (SUCCESS);
-}
-
-static int	meals_sem(t_table **table)
-{
-	int		i;
-
-	i = -1;
-	while (++i < (*table)->info->num)
-		sem_wait((*table)->info->meals_sem);
 	return (SUCCESS);
 }
 
@@ -71,7 +57,6 @@ static int	create_process(t_table **table)
 
 	i = -1;
 	sem_wait((*table)->info->death_sem);
-	meals_sem(table);
 	(*table)->start_time = get_time();
 	while (++i < (*table)->info->num)
 	{
@@ -86,9 +71,9 @@ static int	create_process(t_table **table)
 		else if (!(*table)->philo_pid[i])
 		{
 			life_cycle(&((*table)->philo[i]));
-			// close_sem(table);
-			// free_table(*table);
-			return (SUCCESS);
+			close_sem(table);
+			free_table(*table);
+			exit (SUCCESS);
 		}
 	}
 	return (SUCCESS);
@@ -100,7 +85,5 @@ int	init_philo(t_table **table)
 		return (ERROR);
 	if (create_process(table) == ERROR)
 		return (ERROR);
-	meals_sem(table);
-	sem_wait((*table)->info->death_sem);
 	return (SUCCESS);
 }

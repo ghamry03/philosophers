@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 18:15:42 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/16 00:43:25 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:57:12 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,12 @@ void	free_table(t_table *table);
 int		init_philo(t_table **table);
 void	close_sem(t_table **table);
 void	collect_philo(t_table **table);
-void	reset_meals_sem(t_info *info);
 
 void	life_cycle(t_philo *philo);
 int		forks(t_philo *philo);
 int		eat(t_philo *philo);
 int		sleeep(t_philo *philo);
 int		think(t_philo *philo);
-
-void	terminate_proc(pid_t *pid, int num);
 
 size_t	get_time(void);
 size_t	time_stamp(size_t start);

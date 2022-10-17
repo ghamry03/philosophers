@@ -6,26 +6,18 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 19:42:55 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/16 00:16:51 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/17 18:02:17 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	reset_meals_sem(t_info *info)
+static void	terminate_proc(pid_t *pid, int num, size_t t_eat)
 {
 	int		i;
 
 	i = -1;
-	while (++i < info->num)
-		sem_post(info->meals_sem);
-}
-
-void	terminate_proc(pid_t *pid, int num)
-{
-	int		i;
-
-	i = -1;
+	mysleep(t_eat);
 	while (++i < num)
 	{
 		if (kill(pid[i], SIGKILL))
@@ -59,7 +51,9 @@ void	close_sem(t_table **table)
 
 void	collect_philo(t_table **table)
 {
-	terminate_proc((*table)->philo_pid, (*table)->info->num);
+	sem_wait((*table)->info->death_sem);
+	terminate_proc((*table)->philo_pid,
+		(*table)->info->num, (*table)->info->t_eat);
 	wait_philo(table);
 	close_sem(table);
 }

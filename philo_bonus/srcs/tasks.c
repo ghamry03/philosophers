@@ -6,7 +6,7 @@
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/04 08:18:00 by ommohame          #+#    #+#             */
-/*   Updated: 2022/10/16 00:54:48 by ommohame         ###   ########.fr       */
+/*   Updated: 2022/10/17 17:55:05 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 int	forks(t_philo *philo)
 {
 	sem_wait(philo->info->forks_sem);
-	sem_wait(philo->last_meal);
 	if (philo->neat == 0)
+	{
+		sem_wait(philo->last_meal);
 		philo->last_eat = get_time();
-	sem_post(philo->last_meal);
+		sem_post(philo->last_meal);
+	}
 	print_state(philo);
 	sem_wait(philo->info->forks_sem);
 	print_state(philo);

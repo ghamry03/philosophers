@@ -3,6 +3,10 @@
 		"philo.h": "c",
 		"wait.h": "c",
 		"structure.h": "c",
-		"locale": "c"
+		"locale": "c",
+		"semaphore.h": "c",
+		"signal.h": "c",
+		"unistd.h": "c",
+		"time.h": "c"
 	}
 }
