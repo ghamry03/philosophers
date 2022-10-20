@@ -5,21 +5,44 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/27 02:02:28 by ommohame          #+#    #+#             */
-/*   Updated: 2022/08/27 02:07:06 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/02 00:32:51 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/17 17:50:40 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURE_H
 # define STRUCTURE_H
 
+typedef struct s_info
+{
+	int			num;
+	int			t_eat;
+	int			t_death;
+	int			t_sleep;
+	int			repeat;
+	sem_t		*meals_sem;
+	sem_t		*forks_sem;
+	sem_t		*print_sem;
+	sem_t		*death_sem;
+}	t_info;
+
 typedef struct s_philo
 {
-	size_t		philo;
-	size_t		death;
-	size_t		eat;
-	size_t		sleep;	
-	size_t		repeat;
+	int				id;
+	int				state;
+	size_t			*start_time;
+	int				neat;
+	size_t			last_eat;
+	sem_t			*last_meal;
+	t_info			*info;
 }	t_philo;
+
+typedef struct s_table
+{
+	pid_t	*philo_pid;
+	size_t	start_time;
+	t_info	*info;
+	t_philo	*philo;
+}	t_table;
 
 #endif

@@ -5,78 +5,96 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/27 02:02:28 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/24 15:41:58 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/02 00:32:51 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/10 00:45:08 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURE_H
 # define STRUCTURE_H
 
-/*
-**	i:			index of philo
-**	status:		state of the philo
-	 				0: dead
-					1: picked forks
-					2: ate food
-					3: slept
-					4:thinking
-**	eat:		time to eat
-**	death:		time to die
-**	sleep:		time to sleep
-**	repeat:		how many time to repeat the cycle
-**	mutex:		philo own mutex lock
-*/
-typedef struct	s_philo 
+/**
+ * eat: time to eat
+ * death: time to die
+ * sleep: time to sleep
+ * repeat: number of times each philosopher should eat 
+**/
+typedef struct s_info
 {
-	int				i;
+	int			num;
+	int			t_eat;
+	int			t_death;
+	int			t_sleep;
+	int			repeat;
+}	t_info;
+
+/**
+ * id: philosopher id
+ * state: philosopher status
+ * 			-1: dead
+ * 			 0: didn't start yet / thinking
+ * 			 1: picked forks
+ * 			 2: eating
+ * 			 3: sleeping
+ * start_time: system time when the first thread was created
+ * check_death: checks if any philosopher died
+ * left_forkn: left fork number
+ * right_forkn: right fork number
+ * left_fork: fork on the left
+ * right_fork: fork on the right
+ * eat: time to eat
+ * death: time to die
+ * sleep: time to sleep
+ * neat: how many times the philosopher ate
+ * repeat: number of times each philosopher should eat
+ * last_eat: last time philosopher ate
+ * left_mutex: mutex for the left fork
+ * right_mutex: mutex for the right fork
+ * print: mutex that is shared between all philosophers to print
+**/
+typedef struct s_philo
+{
+	int				id;
 	int				state;
 	int				*check_death;
+	size_t			*start_time;
 	int				left_forkn;
 	int				right_forkn;
 	int				*left_fork;
 	int				*right_fork;
-	int				death;
-	int				eat;
-	int				sleep;
-	int				repeat;
-	time_t			last_eat;
-	time_t			*start;
+	int				neat;
+	size_t			last_eat;
+	t_info			*info;
 	pthread_mutex_t	*left_mutex;
 	pthread_mutex_t	*right_mutex;
 	pthread_mutex_t	*print;
-	pthread_mutex_t	*death_l;
 }	t_philo;
 
-/*
-**	num:		number of philos
-**	eat:		time to eat
-**	death:		time to die
-**	sleep:		time to sleep
-**	repeat:		how many time to repeat the cycle
-					-1: repeat it until a philo die
-**	fork:		has the fork status that the philo gonna use to ear
-					0: available
-					1: taken
-**	threads:	an array that has all threads id
-**	mutex:		an array with all the mutex locks
-**	philo:		a structure for each philospher
-*/
+/**
+ * num: number of philosophers
+ * check_death: check if any philo died
+ * 				0: no philosopher died
+ * 				1: a philosopher died
+ * start_time: system time when the first thread was created
+ * eat: time to eat
+ * death: time to die
+ * sleep: time to sleep
+ * repeat: number of times each philosopher should eat
+ * fork: each fork status
+ * threads: philosophers threads
+ * mutex: mutex locks array
+ * print: printing lock
+ * philo: philosophers structure
+**/
 typedef struct s_table
 {
-	int				*i;
-	int				num;
-	int				death;
 	int				check_death;
-	int				eat;
-	int				sleep;
-	int				repeat;
-	int				*fork;
-	time_t			start;
+	size_t			start_time;
+	int				*forks;
 	pthread_t		*threads;
 	pthread_mutex_t	*mutex;
 	pthread_mutex_t	print;
-	pthread_mutex_t	death_l;
+	t_info			*info;
 	t_philo			*philo;
 }	t_table;
 

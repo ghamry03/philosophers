@@ -5,24 +5,27 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/08/26 18:22:31 by ommohame          #+#    #+#              #
-#    Updated: 2022/08/27 03:08:03 by ommohame         ###   ########.fr        #
+#    Created: 2022/10/01 18:32:36 by ommohame          #+#    #+#              #
+#    Updated: 2022/10/13 08:51:03 by ommohame         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=		philo
+NAME		=		philo_bonus
 
-SRCS		=		main.c \
-					help.c \
-					parser.c \
-					fill_struct.c \
+SRCS		=		main.c				\
+					parser.c			\
+					error_msg.c			\
+					init_struct.c		\
+					init_philo.c		\
+					terminate_proc.c	\
+					life_cycle.c		\
+					tasks.c				\
+					time.c				\
+					log_msg.c			\
 
-UTILS		=	ft_strlen.c \
-				ft_putstr_fd.c \
-				ft_strfcmp.c \
-				ft_isdigit.c \
-				ft_atox.c	\
-				print_struct.c \
+UTILS		=		ft_put_fd.c			\
+					ft_isdigit.c		\
+					ft_atox.c			\
 
 SRCS_DIR	=		./srcs/
 
@@ -32,7 +35,7 @@ INCLUDES	=		./includes
 
 CC			=		gcc
 
-CFLAGS		=		-Wall -Werror -Wextra
+CFLAGS		=		-Wall -Werror -Wextra -pthread -g3
 
 OBJS		=		$(addprefix $(SRCS_DIR),$(SRCS:.c=.o))
 
@@ -43,17 +46,17 @@ RM			=		rm -rf
 $(NAME)		:		$(UTILS_OBJS) $(OBJS)
 					$(CC) $(CFLAGS) $(UTILS_OBJS) $(OBJS) -I$(INCLUDES) -o $(NAME)
 					clear
-					@echo "compilation Successful! 🥳"
+					@echo "Compilation  Successful!"
 
 all			:		$(NAME)
 
 clean		:
 					@$(RM) $(OBJS) 
 					@$(RM) $(UTILS_OBJS)
-					@echo "clean Successful! 🥳"
 
 fclean		:		clean
 					@$(RM) $(NAME)
-					@echo "fclean Successful! 🥳"
 
 re			:		fclean all
+
+.PHONY		:		$(NAME) all clean fclean re

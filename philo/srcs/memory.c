@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_struct.c                                     :+:      :+:    :+:   */
+/*   memory.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/27 02:52:40 by ommohame          #+#    #+#             */
-/*   Updated: 2022/08/27 02:56:12 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/03 19:06:54 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/09 18:36:26 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-void	print_struct(t_philo philo)
+void	free_table(t_table *table)
 {
-	printf("philo num: %zu\n", philo.philo);
-	printf("death time: %zu\n", philo.death);
-	printf("eat time: %zu\n", philo.eat);
-	printf("sleep time: %zu\n", philo.sleep);
-	printf("repeat: %zu\n", philo.repeat);
+	free(table->forks);
+	free(table->threads);
+	free(table->mutex);
+	free(table->philo);
+	free(table->info);
+	free(table);
 }

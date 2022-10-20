@@ -3,50 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/26 19:53:52 by ommohame          #+#    #+#             */
-/*   Updated: 2022/08/27 01:49:53 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/03 16:27:21 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/15 16:38:57 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	check_number(char *str)
+static int	check_number(char *str)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '-')
+		if (!ft_isdigit(str[i++]))
 		{
-			ft_putstr_fd("philo: error: found negative sign\n", 2);
-			return (0);
+			print_msg(PAR_ERR, NDGT_ERR);
+			return (ERROR);
 		}
-		else if (!ft_isdigit(str[i++]))
+		if (i > 11 || ft_atox(str) > INT_MAX)
 		{
-			ft_putstr_fd("philo: error: non-digit character\n", 2);
-			return (0);
-		}
-		else if (i > INT_MAX)
-		{
-			ft_putstr_fd("philo: error: number is more than int max\n", 2);
-			return (0);
+			print_msg(PAR_ERR, NMAX_ERR);
+			return (ERROR);
 		}
 	}
-	return (1);
+	return (SUCCESS);
 }
 
-int	parser(char **av)
+int	parser(int ac, char **av)
 {
 	int		i;
 
-	i = 1;
-	while (av[i])
+	i = 0;
+	if (ac > 6 || ac < 5)
 	{
-		if (!check_number(av[i++]))
-			return (0);
+		print_msg(PAR_ERR, INV_ARG);
+		return (ERROR);
 	}
-	return (1);
+	while (av[++i])
+	{
+		if (check_number(av[i]) == ERROR)
+			return (ERROR);
+	}
+	return (SUCCESS);
 }

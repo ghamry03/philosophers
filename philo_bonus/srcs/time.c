@@ -1,39 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/02 23:56:57 by ommohame          #+#    #+#             */
-/*   Updated: 2022/08/26 18:56:51 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/03 23:35:56 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/13 08:44:19 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-/* 
-* writes only one character
-* uses the parameter fd to identify type of write return
-*/
-void	ft_putchar_fd(char c, int fd)
+size_t	get_time(void)
 {
-	write(fd, &c, 1);
+	size_t			ret;
+	struct timeval	current;
+
+	if (gettimeofday(&current, NULL) == -1)
+	{
+		ft_putstr_fd("philo: getting the time failed\n", 2);
+		return (-1);
+	}
+	ret = (current.tv_sec * 1000) + (current.tv_usec / 1000);
+	return (ret);
 }
 
-/*
-* uses ft_put char to print out every character in string s
-*/
-void	ft_putstr_fd(char *s, int fd)
+size_t	time_stamp(size_t start)
 {
-	int	i;
+	return (get_time() - start);
+}
 
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i])
-	{
-		ft_putchar_fd(s[i], fd);
-		i++;
-	}
+void	mysleep(size_t duration)
+{
+	size_t	time;
+
+	time = get_time();
+	while (get_time () < time + duration)
+		usleep(500);
 }

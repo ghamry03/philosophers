@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_state.c                                      :+:      :+:    :+:   */
+/*   log_msg.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 23:07:28 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/29 00:20:02 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/04 01:16:05 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/13 08:51:41 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-static void	fork_log(int n, int fork_n, int current)
+static void	fork_log(int n, int current)
 {
 	ft_putstr_fd(YELLOW, 1);
 	ft_putnbr_fd(current, 1);
 	ft_putstr_fd(": philo "BOLDYELLOW, 1);
 	ft_putnbr_fd(n, 1);
-	ft_putstr_fd(RESET YELLOW" has picked fork ", 1);
-	ft_putnbr_fd(fork_n, 1);
+	ft_putstr_fd(RESET YELLOW" has picked a fork ", 1);
 	ft_putstr_fd(" 🥢\n", 1);
 	ft_putstr_fd(RESET, 1);
 }
@@ -46,27 +45,28 @@ static void	sleeping_log(int n, int current)
 
 static void	thinking_log(int n, int current)
 {
-	ft_putstr_fd(YELLOW, 1);
+	ft_putstr_fd(CYAN, 1);
 	ft_putnbr_fd(current, 1);
-	ft_putstr_fd(": philo "BOLDYELLOW, 1);
+	ft_putstr_fd(": philo "CYAN, 1);
 	ft_putnbr_fd(n, 1);
-	ft_putstr_fd(RESET YELLOW" is thinking 💭\n", 1);
+	ft_putstr_fd(RESET CYAN" is thinking 💭\n", 1);
 	ft_putstr_fd(RESET, 1);
 }
 
-void	print_state(t_philo *philo, int fork_n)
+int	print_state(t_philo *philo)
 {
 	time_t	current;
 
-	current = time_stamp(*philo->start);
-	pthread_mutex_lock(philo->print);
-	if (philo->state == 1 && !*philo->check_death)
-		fork_log(philo->i, fork_n, current);
-	else if (philo->state == 2 && !*philo->check_death)
-		eating_log(philo->i, current);
-	else if (philo->state == 3 && !*philo->check_death)
-		sleeping_log(philo->i, current);
-	else if (philo->state == 4 && !*philo->check_death)
-		thinking_log(philo->i, current);
-	pthread_mutex_unlock(philo->print);
+	sem_wait(philo->info->print_sem);
+	current = time_stamp(*philo->start_time);
+	if (philo->state == P_FORK)
+		fork_log(philo->id, current);
+	else if (philo->state == EAT)
+		eating_log(philo->id, current);
+	else if (philo->state == SLEEP)
+		sleeping_log(philo->id, current);
+	else if (philo->state == THINK)
+		thinking_log(philo->id, current);
+	sem_post(philo->info->print_sem);
+	return (SUCCESS);
 }

@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/23 09:35:02 by ommohame          #+#    #+#             */
-/*   Updated: 2022/08/31 21:59:14 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/02 00:00:54 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/03 18:19:16 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-int	ft_atox(const char *str)
+size_t	ft_atox(const char *str)
 {
-	int	i;
-	int	num;
+	size_t	i;
+	size_t	num;
 
 	i = 0;
 	num = 0;

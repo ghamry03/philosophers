@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/06 22:15:38 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/08 19:54:46 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/03 23:35:56 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/12 21:20:29 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/philo.h"
 
-time_t	get_time(void)
+size_t	get_time(void)
 {
-	time_t			ret;
+	size_t			ret;
 	struct timeval	current;
 
 	if (gettimeofday(&current, NULL) == -1)
@@ -26,16 +26,28 @@ time_t	get_time(void)
 	return (ret);
 }
 
-time_t	time_stamp(time_t start)
+size_t	time_stamp(time_t start)
 {
 	return (get_time() - start);
 }
 
-void	mysleep(time_t duration)
+int	mysleep(t_philo *philo, size_t duration)
 {
-	time_t	time;
+	size_t	time;
 
 	time = get_time();
 	while (get_time () < time + duration)
-		usleep(10);
+	{
+		if (check_death(philo->last_eat, philo->info->t_death) == DEAD)
+		{
+			pthread_mutex_lock(philo->print);
+			if (*philo->check_death != DEAD)
+				dead_log(philo->id, time_stamp(*philo->start_time));
+			*philo->check_death = DEAD;
+			pthread_mutex_unlock(philo->print);
+			return (DEAD);
+		}
+		usleep(500);
+	}
+	return (SUCCESS);
 }

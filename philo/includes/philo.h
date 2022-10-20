@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ommohame < ommohame@student.42abudhabi.ae> +#+  +:+       +#+        */
+/*   By: ommohame < ommohame@student.42abudhabi.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/26 18:40:30 by ommohame          #+#    #+#             */
-/*   Updated: 2022/09/24 15:23:12 by ommohame         ###   ########.fr       */
+/*   Created: 2022/10/01 18:15:42 by ommohame          #+#    #+#             */
+/*   Updated: 2022/10/17 21:35:08 by ommohame         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,58 +21,97 @@
 # include <sys/time.h>
 # include "structure.h"
 
-/***************** COLORS *****************/
-# define RESET			"\033[0m"
-# define BLACK			"\033[30m"	/* Black */
-# define RED			"\033[31m"		 /* Red */
-# define GREEN			"\033[32m"		 /* Green */
-# define YELLOW			"\033[33m"		 /* Yellow */
-# define BLUE			"\033[34m"		 /* Blue */
-# define MAGENTA		"\033[35m"		 /* Magenta */
-# define CYAN			"\033[36m"		 /* Cyan */
-# define WHITE			"\033[37m"		 /* White */
-# define BOLDBLACK		"\033[1m\033[30m"		 /* Bold Black */
-# define BOLDRED		"\033[1m\033[31m"		 /* Bold Red */
-# define BOLDGREEN		"\033[1m\033[32m"		 /* Bold Green */
-# define BOLDYELLOW		"\033[1m\033[33m"		 /* Bold Yellow */
-# define BOLDBLUE		"\033[1m\033[34m"		 /* Bold Blue */
-# define BOLDMAGENTA	"\033[1m\033[35m"		 /* Bold Magenta */
-# define BOLDCYAN		"\033[1m\033[36m"		 /* Bold Cyan */
-# define BOLDWHITE		"\033[1m\033[37m"		 /* Bold White */
+/********************* DEFINES *********************/
+# define SUCCESS 0
+# define ERROR	 1
 
-/***************** PHILO *****************/
-int		parser(char **av);
-void	*cycle_of_life(void *p);
-int		fill_struct(char **av, t_table **philo);
-int		prepare_philo(t_table **philo);
-int		forkah(t_philo *un);
-int		sleepah(t_philo *un);
-int		eat(t_philo *un);
-int		think(t_philo *un);
-int		philo_struct(t_table **philo);
-void	print_state(t_philo *philo, int fork_n);
-int		check_death(t_philo *philo);
+// FORKS
+# define LEFT	0		// left fork
+# define RIGHT	1		// right fork
+# define FREE	1			// fork is available to pick
+# define USED	0			// fork is being used by a philo
 
-/***************** THREADS *****************/
-int		get_threads(t_table **philo);
-int		join_threads(t_table **philo);
-int		init_mutex(t_table **philo);
-int		destroy_mutex(t_table **philo);
+//	PHILOSOPHER STATE
+# define DEAD	-2		// dead
+# define THINK	0		// thinking
+# define P_FORK	1		// picking fork
+# define EAT	2		// eating
+# define SLEEP	3		// sleeping
 
-/***************** TIME *****************/
-time_t	time_stamp(time_t start);
-time_t	get_time(void);
-void	mysleep(time_t duration);
+//	ERROR TYPE
+# define SYS_ERR 0		// system error
+# define PAR_ERR 1		// parser error
 
-/***************** UTILS *****************/
-int		help(void);
-int		ft_strlen(char *str);
+//	SYSTEM ERROR
+# define MALLOC_ERR	0	// malloc fails
+# define MUTEX_ERR	1	// creating mutex lock fails
+# define THREAD_ERR 2	// creating thread fails
+# define JOIN_ERR	3	// joining thread fails
+# define DMUTEX_ERR	4	// destroying mutex fails
+
+//	PARSER ERROR
+# define INV_ARG	0	// invalid argument
+# define NDGT_ERR	1	// non-digit charachter
+# define NMAX_ERR	2	// number more than int max
+# define ZERO_ERR	3	// one of the arguments is equal to zero
+
+/*********************  COLORS  *********************/
+# define RESET			"\033[0m"			// Reset
+# define BLACK			"\033[30m"			// Black
+# define RED			"\033[31m"			// Red
+# define GREEN			"\033[32m"			// Green
+# define YELLOW			"\033[33m"			// Yellow
+# define BLUE			"\033[34m"			// Blue
+# define MAGENTA		"\033[35m"			// Magenta
+# define CYAN			"\033[36m"			// Cyan
+# define WHITE			"\033[37m"			// White
+# define BOLDBLACK		"\033[1m\033[30m"	// Bold Black
+# define BOLDRED		"\033[1m\033[31m"	// Bold Red
+# define BOLDGREEN		"\033[1m\033[32m"	// Bold Green
+# define BOLDYELLOW		"\033[1m\033[33m"	// Bold Yellow
+# define BOLDBLUE		"\033[1m\033[34m"	// Bold Blue
+# define BOLDMAGENTA	"\033[1m\033[35m"	// Bold Magenta
+# define BOLDCYAN		"\033[1m\033[36m"	// Bold Cyan
+# define BOLDWHITE		"\033[1m\033[37m"	// Bold White
+
+/*********************  PHILO *********************/
+int		parser(int ac, char **av);
+
+t_table	*init_struct(char **av);
+
+void	print_msg(int type, int num);
+int		print_state(t_philo *philo, int fork_n);
+
+void	free_table(t_table *table);
+
+int		init_threads(t_table **table);
+void	collect_philo(t_table **table);
+t_table	*init_table_struct(char **av);
+t_info	*init_info_strcut(char **av);
+void	fill_philo_struct(t_table *table, t_philo *philo, int id);
+t_philo	*init_philo_struct(t_table *table);
+
+void	*life_cycle(void *p);
+int		forks(t_philo *philo);
+int		eat(t_philo *philo);
+int		sleeep(t_philo *philo);
+int		think(t_philo *philo);
+
+int		check_death(size_t last_eat, size_t death_time);
+void	dead_log(int n, int current);
+
+void	pick_log(t_philo *philo, size_t current, int fork_n);
+
+size_t	get_time(void);
+size_t	time_stamp(time_t start);
+int		mysleep(t_philo *philo, size_t duration);
+
+/*********************  UTILS  *********************/
+void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
-int		ft_strfcmp(char *s1, char *s2);
-int		ft_isdigit(int c);
-int		ft_atox(const char *str);
-void	print_struct(t_table philo);
+void	ft_putendl_fd(char *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
-char	*ft_strdup(char *s1);
+int		ft_isdigit(int c);
+size_t	ft_atox(const char *str);
 
 #endif
